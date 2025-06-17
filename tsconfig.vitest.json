@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "types": ["vitest", "node"],
+    "isolatedModules": true
+  },
+  "include": ["src", "src/test"]
+}
