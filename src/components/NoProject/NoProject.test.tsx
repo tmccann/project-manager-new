@@ -1,4 +1,28 @@
-test.todo("placeholder for NoProject component tests", () => {
-  // Test cases will be added later
+import { render } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import NoProject from "./NoProject";
+import { NoProject as NoProjectHelpers } from "./NoProject.helpers";
+
+const mockOnAddProject = vi.fn();
+const user = userEvent.setup();
+
+describe("NoProject Component", () => {
+  test("renders create project message when hasProjects is false", () => {
+    render(<NoProject hasProjects={false} onAddProject={mockOnAddProject} />);
+    const { messages, sharedMessage, addNewProjectButton } =
+      NoProjectHelpers.getElements();
+    messages.forEach((msg) => expect(msg).toBeInTheDocument());
+    expect(sharedMessage).toBeInTheDocument();
+    expect(addNewProjectButton).toBeInTheDocument();
+  });
+  test("renders projects message when hasProjects is true", () => {
+    render(<NoProject hasProjects={true} onAddProject={mockOnAddProject} />);
+    const { sharedMessage, addNewProjectButton } =
+      NoProjectHelpers.getElements();
+    expect(sharedMessage).toBeInTheDocument();
+    expect(addNewProjectButton).toBeInTheDocument();
+  });
+  test("mockOnAddProject is executed when addProjectButton Clicked", async () => {
+    await NoProjectHelpers.actions.clickAddButton(user);
+  });
 });
-// This file is a placeholder for future tests related to the NoProject component.
