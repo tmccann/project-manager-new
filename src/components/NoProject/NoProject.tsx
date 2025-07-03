@@ -1,4 +1,9 @@
-const NoProject = () => {
+type NoProjectProps = {
+  onAddProject: () => void;
+  hasProjects: boolean;
+};
+
+const NoProject = ({ onAddProject, hasProjects }: NoProjectProps) => {
   return (
     <div>
       NoProject
