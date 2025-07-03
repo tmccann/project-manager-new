@@ -1,7 +1,12 @@
+import NoProject from "./components/NoProject/NoProject";
+
 export default function App() {
+  const onAddProject = () => {
+    console.log("add button clicked");
+  };
   return (
     <div>
-      <h1>start here</h1>
+      <NoProject hasProjects={true} onAddProject={onAddProject} />
     </div>
   );
 }
