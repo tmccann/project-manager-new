@@ -23,6 +23,6 @@ describe("NoProject Component", () => {
     expect(addNewProjectButton).toBeInTheDocument();
   });
   test("mockOnAddProject is executed when addProjectButton Clicked", async () => {
-    await NoProjectHelpers.actions.clickAddButton(user);
+    await NoProjectHelpers.actions.clickAddButton(user, "+ Create New Project");
   });
 });
