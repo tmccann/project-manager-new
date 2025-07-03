@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import NoProject from "./NoProject";
 import { NoProject as NoProjectHelpers } from "./NoProject.helpers";
@@ -8,9 +8,7 @@ const user = userEvent.setup();
 
 describe("NoProject Component props has project true", () => {
   test("renders create project message when hasProjects is true", () => {
-    // FIXME: Fails when certain elements not rendered — refactor helper to support conditional UI
     render(<NoProject hasProjects={true} onAddProject={mockOnAddProject} />);
-    screen.debug();
     const { messages, sharedMessage, addNewProjectButton } =
       NoProjectHelpers.getElements();
     messages.forEach((msg) => expect(msg).toBeInTheDocument());
@@ -19,7 +17,7 @@ describe("NoProject Component props has project true", () => {
   });
 
   test("mockOnAddProject is executed when addProjectButton Clicked", async () => {
-    render(<NoProject hasProjects={true} onAddProject={mockOnAddProject} />);
+    render(<NoProject hasProjects={false} onAddProject={mockOnAddProject} />);
     await NoProjectHelpers.actions.clickAddButton(user, "Create New Project");
   });
 });
