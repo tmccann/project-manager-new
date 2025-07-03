@@ -15,10 +15,8 @@ export const NoProject = {
   }),
 
   actions: {
-    async clickAddButton(user: UserEvent) {
-      await user.click(
-        screen.getByRole("button", { name: "+ Create New Project" })
-      );
+    async clickAddButton(user: UserEvent, label: string) {
+      await user.click(screen.getByRole("button", { name: label }));
     },
   },
 };
