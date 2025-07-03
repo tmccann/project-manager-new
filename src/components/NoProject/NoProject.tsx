@@ -4,9 +4,24 @@ type NoProjectProps = {
 };
 
 const NoProject = ({ onAddProject, hasProjects }: NoProjectProps) => {
+  const createProject = "Create a new project to get started";
   return (
-    <div>
-      NoProject
+    <section>
+      {/* turnery operator for if projects */}
+      {hasProjects ? (
+        // message if projects
+        <div>
+          <p>No project selected</p>
+          <p>Select a project</p>
+          <p>or</p>
+          <p>{createProject}</p>
+        </div>
+      ) : (
+        // message if none
+        <div>
+          <p>{createProject}</p>
+        </div>
+      )}
       {/* IF projects exist THEN
           Display message: "No project selected"
           Display message: "Select a project"
@@ -16,10 +31,13 @@ const NoProject = ({ onAddProject, hasProjects }: NoProjectProps) => {
           ELSE (no projects)
           Display message: "Create a new project to get started"
 
-          Show button: "+ Create New Project"
+          
           On click → call onStartAddProject()
+
  */}
-    </div>
+      {/* Show button: "Create New Project" */}
+      <button onClick={onAddProject}>Create New Project</button>
+    </section>
   );
 };
 
