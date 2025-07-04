@@ -5,7 +5,7 @@ export const ProjectForm = {
   getElement: () => ({
     titleInput: screen.getByLabelText("Title"),
     descriptionInput: screen.getByLabelText("Description"),
-    dueDateInput: screen.getByLabelText("Date"),
+    dueDateInput: screen.getByLabelText("Due Date"),
     saveButton: screen.getByRole("button", { name: "Save" }),
     cancelButton: screen.getByRole("button", { name: "Cancel" }),
   }),

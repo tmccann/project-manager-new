@@ -1,9 +1,10 @@
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import ProjectForm from "./ProjectForm";
 import { ProjectForm as ProjectFormHelpers } from "./ProjectForm.helpers";
 import userEvent from "@testing-library/user-event";
 
-const mocksubmit = vi.fn();
+const mockSubmit = vi.fn();
+
 const mockProjectFormData = {
   title: "",
   description: "",
@@ -13,13 +14,13 @@ const user = userEvent.setup();
 
 describe("ProjectForm component", () => {
   beforeEach(() => {
+    vi.clearAllMocks();
     render(
       <ProjectForm
-        handleSubmit={mocksubmit}
+        handleSubmit={mockSubmit}
         ProjectFormData={mockProjectFormData}
       />
     );
-    vi.clearAllMocks();
   });
   test("input and buttons render", () => {
     const {
@@ -36,6 +37,8 @@ describe("ProjectForm component", () => {
     expect(dueDateInput).toBeInTheDocument();
   });
   test("mocksubmit is run when save button clicked", async () => {
+    screen.debug();
     await ProjectFormHelpers.actions.clickButton(user, "Save");
+    expect(mockSubmit).toHaveBeenCalled();
   });
 });
