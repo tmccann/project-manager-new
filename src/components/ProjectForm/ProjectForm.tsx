@@ -1,11 +1,21 @@
-const ProjectForm = () => {
+type ProjectFormProps = {
+  handleSubmit: () => void;
+  ProjectFormData: {
+    title: string;
+    description: string;
+    dueDate: string;
+  };
+};
+
+const ProjectForm = ({ handleSubmit, ProjectFormData }: ProjectFormProps) => {
   return (
     <section>
-      <div>
-        {/* cancel button */}
-        {/* save Button */}
-      </div>
-      <form action="submit">
+      <form onSubmit={handleSubmit}>
+        {" "}
+        <div>
+          {/* cancel button */}
+          {/* save Button */}
+        </div>
         {/* title Input */}
         {/* description */}
         {/*due date */}
