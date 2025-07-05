@@ -29,7 +29,7 @@ describe("ProjectForm component", () => {
       titleInput,
       descriptionInput,
       dueDateInput,
-    } = ProjectFormHelpers.getElement();
+    } = ProjectFormHelpers.getElements();
     expect(cancelButton).toBeInTheDocument();
     expect(saveButton).toBeInTheDocument();
     expect(titleInput).toBeInTheDocument();
@@ -37,8 +37,40 @@ describe("ProjectForm component", () => {
     expect(dueDateInput).toBeInTheDocument();
   });
   test("mocksubmit is run when save button clicked", async () => {
-    screen.debug();
     await ProjectFormHelpers.actions.clickButton(user, "Save");
     expect(mockSubmit).toHaveBeenCalled();
+  });
+  test("inputs eccepts values", async () => {
+    const {
+      titleInput,
+      descriptionInput,
+      dueDateInput,
+      saveButton,
+      cancelButton,
+    } = ProjectFormHelpers.getElements();
+    const today = new Date().toLocaleDateString();
+    const inputStrings = {
+      titleString: "New Project",
+      descriptionString: "Description goes here",
+      dueDateString: today,
+    };
+    await ProjectFormHelpers.actions.userInput(
+      user,
+      "Title",
+      inputStrings.titleString
+    );
+    expect(titleInput).toHaveValue(inputStrings.titleString);
+    await ProjectFormHelpers.actions.userInput(
+      user,
+      "Description",
+      inputStrings.descriptionString
+    );
+    expect(titleInput).toHaveValue(inputStrings.descriptionString);
+    await ProjectFormHelpers.actions.userInput(
+      user,
+      "Due Date",
+      inputStrings.dueDateString
+    );
+    expect(titleInput).toHaveValue(inputStrings.dueDateString);
   });
 });
