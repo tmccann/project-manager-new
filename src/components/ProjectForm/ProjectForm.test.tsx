@@ -15,12 +15,7 @@ const user = userEvent.setup();
 describe("ProjectForm component", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    render(
-      <ProjectForm
-        handleSubmit={mockSubmit}
-        ProjectFormData={mockProjectFormData}
-      />
-    );
+    render(<ProjectForm handleSubmit={mockSubmit} />);
   });
   test("input and buttons render", () => {
     const {
@@ -41,13 +36,8 @@ describe("ProjectForm component", () => {
     expect(mockSubmit).toHaveBeenCalled();
   });
   test("inputs eccepts values", async () => {
-    const {
-      titleInput,
-      descriptionInput,
-      dueDateInput,
-      saveButton,
-      cancelButton,
-    } = ProjectFormHelpers.getElements();
+    const { titleInput, descriptionInput, dueDateInput } =
+      ProjectFormHelpers.getElements();
     const today = new Date().toLocaleDateString();
     const inputStrings = {
       titleString: "New Project",
@@ -65,12 +55,12 @@ describe("ProjectForm component", () => {
       "Description",
       inputStrings.descriptionString
     );
-    expect(titleInput).toHaveValue(inputStrings.descriptionString);
+    expect(descriptionInput).toHaveValue(inputStrings.descriptionString);
     await ProjectFormHelpers.actions.userInput(
       user,
       "Due Date",
       inputStrings.dueDateString
     );
-    expect(titleInput).toHaveValue(inputStrings.dueDateString);
+    expect(dueDateInput).toHaveValue(inputStrings.dueDateString);
   });
 });
