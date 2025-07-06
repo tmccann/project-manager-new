@@ -12,6 +12,18 @@ const mockProjectFormData = {
 };
 const user = userEvent.setup();
 
+const today = new Date().toLocaleDateString();
+const inputStrings = {
+  titleString: "New Project",
+  descriptionString: "Description goes here",
+  dueDateString: today,
+};
+
+const errorMessages = {
+  titleError: "Error title must be atleast 4 char",
+  descriptionError: "Error description must be atleast 4 char",
+  dateError: "Error date must be today or later",
+};
 describe("ProjectForm component", () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -35,15 +47,10 @@ describe("ProjectForm component", () => {
     await ProjectFormHelpers.actions.clickButton(user, "Save");
     expect(mockSubmit).toHaveBeenCalled();
   });
-  test("inputs eccepts values", async () => {
+  test("inputs eccept values", async () => {
     const { titleInput, descriptionInput, dueDateInput } =
       ProjectFormHelpers.getElements();
-    const today = new Date().toLocaleDateString();
-    const inputStrings = {
-      titleString: "New Project",
-      descriptionString: "Description goes here",
-      dueDateString: today,
-    };
+
     await ProjectFormHelpers.actions.userInput(
       user,
       "Title",
@@ -62,5 +69,53 @@ describe("ProjectForm component", () => {
       inputStrings.dueDateString
     );
     expect(dueDateInput).toHaveValue(inputStrings.dueDateString);
+  });
+});
+
+describe("input validation", () => {
+  beforeEach(() => {
+    render(<ProjectForm handleSubmit={mockSubmit} />);
+  });
+  test("inputs error if left empty", async () => {
+    await ProjectFormHelpers.actions.clickButton(user, "Save");
+    expect(screen.getAllByText(errorMessages.titleError)).toBeInTheDocument();
+    expect(
+      screen.getByText(errorMessages.descriptionError)
+    ).toBeInTheDocument();
+    expect(screen.getByText(errorMessages.dateError)).toBeInTheDocument();
+  });
+  test("inputs errors when user input invalid", async () => {
+    await ProjectFormHelpers.actions.userInput(user, "Title", "123");
+    await ProjectFormHelpers.actions.userInput(user, "Description", "123");
+    await ProjectFormHelpers.actions.userInput(user, "Due Date", "01/01/99");
+    expect(screen.getByText(errorMessages.titleError)).toBeInTheDocument();
+    expect(
+      screen.getByText(errorMessages.descriptionError)
+    ).toBeInTheDocument();
+    expect(screen.getByText(errorMessages.dateError)).toBeInTheDocument();
+  });
+  test("no message shown when inputs are valid", async () => {
+    await ProjectFormHelpers.actions.userInput(
+      user,
+      "Title",
+      inputStrings.titleString
+    );
+    expect(
+      screen.queryByText(errorMessages.titleError)
+    ).not.toBeInTheDocument();
+    await ProjectFormHelpers.actions.userInput(
+      user,
+      "Description",
+      inputStrings.descriptionString
+    );
+    expect(
+      screen.queryByText(errorMessages.descriptionError)
+    ).not.toBeInTheDocument();
+    await ProjectFormHelpers.actions.userInput(
+      user,
+      "Due Date",
+      inputStrings.dueDateString
+    );
+    expect(screen.queryByText(errorMessages.dateError)).not.toBeInTheDocument();
   });
 });
