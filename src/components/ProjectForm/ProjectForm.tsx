@@ -35,7 +35,6 @@ const ProjectForm = ({ handleSubmit }: ProjectFormProps) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const enteredDate = new Date(val);
-    console.log(enteredDate >= today ? val : null);
     return enteredDate >= today ? val : null;
   };
 
@@ -72,7 +71,6 @@ const ProjectForm = ({ handleSubmit }: ProjectFormProps) => {
   // clear data on cancel
 
   const onClear = () => {
-    console.log("clicked");
     if (title.current) title.current.value = "";
     if (description.current) description.current.value = "";
     if (dueDate.current) dueDate.current.value = "";
