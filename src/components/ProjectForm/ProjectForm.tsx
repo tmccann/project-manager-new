@@ -61,7 +61,9 @@ const ProjectForm = ({ handleSubmit }: ProjectFormProps) => {
         };
 
         // send data to app using handle submit
-        console.log(data);
+        handleSubmit(data);
+        // clear inputs onSumit
+        onClear();
       }
     }
   };
@@ -69,12 +71,22 @@ const ProjectForm = ({ handleSubmit }: ProjectFormProps) => {
   // clear ref when data has valid submit
   // clear data on cancel
 
+  const onClear = () => {
+    console.log("clicked");
+    if (title.current) title.current.value = "";
+    if (description.current) description.current.value = "";
+    if (dueDate.current) dueDate.current.value = "";
+    setErrors(intialErrors);
+  };
+
   const hasErrors = Object.values(errors).some(Boolean);
   return (
     <section>
       <form onSubmit={handleFormValidation}>
         <div>
-          <button type="button">Cancel</button>
+          <button type="button" onClick={onClear}>
+            Cancel
+          </button>
           <button type="submit">Save</button>
         </div>
         {/* title Input */}
