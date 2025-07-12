@@ -45,7 +45,7 @@ describe("ProjectForm component", () => {
     expect(dueDateInput).toBeInTheDocument();
   });
 
-  test("inputs eccept values", async () => {
+  test("inputs accept values", async () => {
     const { titleInput, descriptionInput, dueDateInput } =
       ProjectFormHelpers.getElements();
 
@@ -61,7 +61,7 @@ describe("ProjectForm component", () => {
       inputStrings.descriptionString
     );
     expect(descriptionInput).toHaveValue(inputStrings.descriptionString);
-    await ProjectFormHelpers.actions.userInput(user, "Due Date", "7/7/2025");
+    await ProjectFormHelpers.actions.userInput(user, "Due Date", today);
     expect(dueDateInput).toHaveValue(inputStrings.dueDateString);
   });
 });
