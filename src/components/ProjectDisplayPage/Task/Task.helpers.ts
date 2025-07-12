@@ -4,7 +4,7 @@ import { UserEvent } from "@testing-library/user-event";
 export const Task = {
   getElements: () => ({
     header: screen.getByRole("heading", { level: 2 }),
-    taskInput: screen.getByLabelText("Task Input"),
+    taskInput: screen.getByLabelText("Add new task"),
     addTaskButton: screen.getByRole("button", { name: "Add Task" }),
     tasks: screen.queryAllByRole("listitem"),
     noTasksMessage: screen.queryByText(

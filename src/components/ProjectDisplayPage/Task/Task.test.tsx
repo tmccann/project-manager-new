@@ -21,10 +21,11 @@ describe("Task component", () => {
   });
   test("task input accepts user input", async () => {
     const { taskInput } = TaskHelpers.getElements();
-    await TaskHelpers.actions.taskInput(user, "Task Input", "1234");
+    await TaskHelpers.actions.taskInput(user, "Add new task", "1234");
     expect(taskInput).toHaveValue("1234");
   });
   test("add task button calls mockAddTask onClick", async () => {
+    await TaskHelpers.actions.taskInput(user, "Add new task", "1234");
     await TaskHelpers.actions.addTaskButton(user, "Add Task");
     expect(mockAddTask).toHaveBeenCalled();
   });
@@ -39,12 +40,12 @@ describe("input validation", () => {
     expect(screen.getByText(taskErrorMessage)).toBeInTheDocument();
   });
   test("error displayed if added task character count under 4", async () => {
-    await TaskHelpers.actions.taskInput(user, "Task Input", "123");
+    await TaskHelpers.actions.taskInput(user, "Add new task", "123");
     await TaskHelpers.actions.addTaskButton(user, "Add Task");
     expect(screen.getByText(taskErrorMessage)).toBeInTheDocument();
   });
   test("no error if input is valid", async () => {
-    await TaskHelpers.actions.taskInput(user, "Task Input", "1234");
+    await TaskHelpers.actions.taskInput(user, "Add new task", "1234");
     await TaskHelpers.actions.addTaskButton(user, "Add Task");
     expect(screen.queryByText(taskErrorMessage)).not.toBeInTheDocument();
   });
@@ -54,24 +55,25 @@ describe("adding and removing tasks", () => {
     render(<Task handleAddTask={mockAddTask} />);
   });
   test("task is displayed when added an no task message removed", async () => {
-    await TaskHelpers.actions.taskInput(user, "Add Task", "project task 1");
+    await TaskHelpers.actions.taskInput(user, "Add new task", "project task 1");
     await TaskHelpers.actions.addTaskButton(user, "Add Task");
     const { tasks } = TaskHelpers.getElements();
     expect(tasks).toHaveLength(1);
     expect(screen.getByText("project task 1")).toBeInTheDocument();
   });
   test("tasks can be added and removed", async () => {
-    await TaskHelpers.actions.taskInput(user, "Add Task", "project task 1");
+    await TaskHelpers.actions.taskInput(user, "Add new task", "project task 1");
     await TaskHelpers.actions.addTaskButton(user, "Add Task");
     const { tasks } = TaskHelpers.getElements();
+    screen.debug();
     expect(tasks).toHaveLength(1);
     expect(screen.getByText("project task 1")).toBeInTheDocument();
-    await TaskHelpers.actions.taskInput(user, "Add Task", "project task 2");
+    await TaskHelpers.actions.taskInput(user, "Add new task", "project task 2");
     await TaskHelpers.actions.addTaskButton(user, "Add Task");
     const taskCount = screen.queryAllByRole("listitem");
     expect(taskCount).toHaveLength(2);
     expect(screen.getByText("project task 2")).toBeInTheDocument();
     await TaskHelpers.actions.clearButton(user, "task0");
-    expect(screen.getByText("project task 1")).not.toBeInTheDocument();
+    expect(screen.queryByText("project task 1")).not.toBeInTheDocument();
   });
 });
