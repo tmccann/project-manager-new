@@ -54,7 +54,7 @@ describe("adding and removing tasks", () => {
   beforeEach(() => {
     render(<Task handleAddTask={mockAddTask} />);
   });
-  test("task is displayed when added an no task message removed", async () => {
+  test("task is displayed when task added and no task message removed", async () => {
     await TaskHelpers.actions.taskInput(user, "Add new task", "project task 1");
     await TaskHelpers.actions.addTaskButton(user, "Add Task");
     const { tasks } = TaskHelpers.getElements();
