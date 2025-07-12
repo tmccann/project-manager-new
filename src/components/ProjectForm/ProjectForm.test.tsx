@@ -13,7 +13,6 @@ const mockProjectFormData = {
 const user = userEvent.setup();
 
 const today = new Date().toLocaleDateString();
-console.log(today);
 const inputStrings = {
   titleString: "New Project",
   descriptionString: "Description goes here",
