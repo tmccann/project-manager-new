@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import NoProject from "./NoProject";
-import { NoProject as NoProjectHelpers } from "./NoProject.helpers";
+import { NoProject as NoProjectHelpers } from "../../__testUtils__/helpers/NoProject.helpers";
 
 const mockOnAddProject = vi.fn();
 const user = userEvent.setup();

@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import Task from "./Task";
-import { Task as TaskHelpers } from "./Task.helpers";
+import { Task as TaskHelpers } from "../../../__testUtils__/helpers/Task.helpers";
 import userEvent from "@testing-library/user-event";
 
 const mockAddTask = vi.fn();
