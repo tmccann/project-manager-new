@@ -27,6 +27,5 @@ const SelectedProject = ({
       <p>{projectData.description}</p>
     </header>
   );
-};
 
 export default SelectedProject;
