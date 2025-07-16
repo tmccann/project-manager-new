@@ -3,10 +3,10 @@ export interface Project {
   title: string;
   description: string;
   dueDate: string;
-  tasks: [Task];
+  tasks: TaskItem[];
 }
 
-export interface Task {
+export interface TaskItem {
   taskId: string;
   projectId: string;
   description: string;
