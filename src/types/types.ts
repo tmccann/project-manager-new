@@ -3,10 +3,11 @@ export interface Project {
   title: string;
   description: string;
   dueDate: string;
+  tasks: [Task];
 }
 
 export interface Task {
-  id: string;
+  taskId: string;
   projectId: string;
-  text: string;
+  description: string;
 }
