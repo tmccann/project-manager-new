@@ -60,12 +60,13 @@ describe("adding and removing tasks", () => {
     const { tasks } = TaskHelpers.getElements();
     expect(tasks).toHaveLength(1);
     expect(screen.getByText("project task 1")).toBeInTheDocument();
+    const { noTasksMessage } = TaskHelpers.getElements();
+    expect(noTasksMessage).not.toBeInTheDocument();
   });
   test("tasks can be added and removed", async () => {
     await TaskHelpers.actions.taskInput(user, "Add new task", "project task 1");
     await TaskHelpers.actions.addTaskButton(user, "Add Task");
     const { tasks } = TaskHelpers.getElements();
-    screen.debug();
     expect(tasks).toHaveLength(1);
     expect(screen.getByText("project task 1")).toBeInTheDocument();
     await TaskHelpers.actions.taskInput(user, "Add new task", "project task 2");

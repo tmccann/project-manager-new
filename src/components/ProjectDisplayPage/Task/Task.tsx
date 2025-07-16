@@ -1,19 +1,20 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { TaskItem } from "../../../types/types";
 
-type TaskProps = {
-  handleAddTask: (e: string) => void;
+export type TaskProps = {
+  handleAddTask: (task: TaskItem) => void;
+  projectId: string;
+  tasks: TaskItem[];
+  handleTaskDelete: (projectId: string, taskId: string) => void;
 };
-
-type NewTask = {
-  id: number;
-  description: string;
-};
-
-const Task = ({ handleAddTask }: TaskProps) => {
+const Task = ({
+  handleAddTask,
+  tasks,
+  projectId,
+  handleTaskDelete,
+}: TaskProps) => {
   // temporary array to store task till app state used
-  const [tasks, setTasks] = useState<NewTask[]>([]);
   const [error, setError] = useState(false);
-
   // use ref to accees input change
   const task = useRef<HTMLInputElement>(null);
 
@@ -27,11 +28,10 @@ const Task = ({ handleAddTask }: TaskProps) => {
 
   const handleNewTaskValidation = () => {
     const newTask = onValidText(task);
-    const id = tasks.length === 0 ? 0 : tasks.length;
+    const taskId = tasks.length === 0 ? "0" : tasks.length.toString();
     if (newTask) {
       setError(false);
-      setTasks((prev) => [...prev, { id: id, description: newTask }]);
-      handleAddTask(newTask);
+      handleAddTask({ projectId, taskId, description: newTask });
       onClear();
     } else {
       setError(true);
@@ -42,9 +42,9 @@ const Task = ({ handleAddTask }: TaskProps) => {
     if (task.current) task.current.value = "";
   };
 
-  const onDelete = (id: number) => {
-    setTasks((prev) => prev.filter((task) => task.id !== id));
-  };
+  // const onDelete = (id: number) => {
+  //   setTasks((prev) => prev.filter((task) => task.id !== id));
+  // };
   return (
     <section>
       <h2>Tasks</h2>
@@ -61,14 +61,16 @@ const Task = ({ handleAddTask }: TaskProps) => {
       ) : (
         <ul>
           {tasks.map((task) => (
-            <li key={task.id} id={task.id.toString()}>
+            <li key={task.taskId} id={task.taskId}>
               <p>
                 {task.description}
                 <button
-                  onClick={() => onDelete(task.id)}
-                  data-testid={`task${task.id}`}
+                  onClick={() => {
+                    handleTaskDelete(projectId, task.taskId);
+                  }}
+                  data-testid={`task${task.taskId}`}
                 >
-                  Clear
+                  Delete
                 </button>
               </p>
             </li>

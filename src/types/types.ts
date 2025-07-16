@@ -1,13 +1,15 @@
-export interface Project {
+export type Project = {
   id: string;
   title: string;
   description: string;
   dueDate: string;
   tasks: TaskItem[];
-}
 
-export interface TaskItem {
-  taskId: string;
+};
+
+export type TaskItem = {
   projectId: string;
+  taskId: string;
   description: string;
-}
+};
+
