@@ -1,30 +1,25 @@
-export type ProjectData = {
-  id: string;
-  title: string;
-  description: string;
-  dueDate: string;
-};
+import type { Project } from "../../../App";
 export type SelectedProjectProps = {
-  projectData: ProjectData;
-  handleDelete: (id: string) => void;
+  project: Project;
+  handleProjectDelete: (id: string) => void;
 };
 
 const SelectedProject = ({
-  projectData,
-  handleDelete,
+  project,
+  handleProjectDelete,
 }: SelectedProjectProps) => {
   return (
     <header>
       <div>
         {/* display title and delete button */}
         {/* delete button should pass project id*/}
-        <h1>{projectData.title}</h1>
-        <button onClick={() => handleDelete(projectData.id)}>Delete</button>
+        <h1>{project.title}</h1>
+        <button onClick={() => handleProjectDelete(project.id)}>Delete</button>
       </div>
       {/* display due date */}
-      <p>{projectData.dueDate}</p>
+      <p>{project.dueDate}</p>
       {/* display discription  */}
-      <p>{projectData.description}</p>
+      <p>{project.description}</p>
     </header>
   );
 
