@@ -1,13 +1,13 @@
 import type { TaskItem } from "../../types/types";
 import { Project } from "../../types/types";
 import SelectedProject from "./SelectedProject/SelectedProject";
-import Task from "./Task/Task";
+import Task, { TaskDeleteProps } from "./Task/Task";
 
 type ProjectDisplayPageProps = {
   project: Project;
   handleProjectDelete: (id: string) => void;
   handleAddTask: (task: TaskItem) => void;
-  handleTaskDelete: (projectId: string, taskId: string) => void;
+  handleTaskDelete: (data: TaskDeleteProps) => void;
 };
 
 const ProjectDisplayPage = ({
@@ -16,7 +16,6 @@ const ProjectDisplayPage = ({
   handleAddTask,
   handleTaskDelete,
 }: ProjectDisplayPageProps) => {
-  console.log(project);
   return (
     <section>
       <SelectedProject

@@ -1,17 +1,23 @@
 import { render, screen } from "@testing-library/react";
 import Task from "./Task";
 import { Task as TaskHelpers } from "../../../__testUtils__/helpers/Task.helpers";
+import { tasks } from "../../../__testUtils__/mocks/Task.mock";
 import userEvent from "@testing-library/user-event";
 
 const mockAddTask = vi.fn();
+const mockhandleTaskDelete = vi.fn();
 const user = userEvent.setup();
-
 const taskErrorMessage = "added tasks must have atleast 4 characters";
 describe("Task component", () => {
-  beforeEach(() => {
-    render(<Task handleAddTask={mockAddTask} />);
-  });
-  test("scafolding elements render", () => {
+  test("scafolding elements render with taskError when no task props", () => {
+    render(
+      <Task
+        handleAddTask={mockAddTask}
+        tasks={[]}
+        projectId="1"
+        handleTaskDelete={mockhandleTaskDelete}
+      />
+    );
     const { header, taskInput, addTaskButton, noTasksMessage } =
       TaskHelpers.getElements();
     expect(header).toBeInTheDocument();
@@ -19,62 +25,73 @@ describe("Task component", () => {
     expect(addTaskButton).toBeInTheDocument();
     expect(noTasksMessage).toBeInTheDocument();
   });
-  test("task input accepts user input", async () => {
-    const { taskInput } = TaskHelpers.getElements();
-    await TaskHelpers.actions.taskInput(user, "Add new task", "1234");
-    expect(taskInput).toHaveValue("1234");
-  });
-  test("add task button calls mockAddTask onClick", async () => {
-    await TaskHelpers.actions.taskInput(user, "Add new task", "1234");
-    await TaskHelpers.actions.addTaskButton(user, "Add Task");
-    expect(mockAddTask).toHaveBeenCalled();
+  test("tasks props present: listitems render and hides No-task message", () => {
+    render(
+      <Task
+        handleAddTask={mockAddTask}
+        tasks={tasks}
+        projectId="1"
+        handleTaskDelete={mockhandleTaskDelete}
+      />
+    );
+    const { taskElements } = TaskHelpers.getElements();
+    expect(taskElements).toHaveLength(2);
+    expect(screen.getByText("test task 1")).toBeInTheDocument();
+    expect(screen.getByText("test task 2")).toBeInTheDocument();
   });
 });
 
-describe("input validation", () => {
+describe("user input actions", () => {
   beforeEach(() => {
-    render(<Task handleAddTask={mockAddTask} />);
+    vi.clearAllMocks();
+    render(
+      <Task
+        handleAddTask={mockAddTask}
+        tasks={[]}
+        projectId="1"
+        handleTaskDelete={mockhandleTaskDelete}
+      />
+    );
   });
-  test("error displayed if empty task added", async () => {
-    await TaskHelpers.actions.addTaskButton(user, "Add Task");
-    expect(screen.getByText(taskErrorMessage)).toBeInTheDocument();
-  });
-  test("error displayed if added task character count under 4", async () => {
+  test("validation: task input displays error if under 4 charcters", async () => {
     await TaskHelpers.actions.taskInput(user, "Add new task", "123");
     await TaskHelpers.actions.addTaskButton(user, "Add Task");
     expect(screen.getByText(taskErrorMessage)).toBeInTheDocument();
   });
-  test("no error if input is valid", async () => {
+  test("validation: task input displays no error if over 4 charcters", async () => {
     await TaskHelpers.actions.taskInput(user, "Add new task", "1234");
     await TaskHelpers.actions.addTaskButton(user, "Add Task");
     expect(screen.queryByText(taskErrorMessage)).not.toBeInTheDocument();
   });
+  test("addtask is called with correct props", async () => {
+    await TaskHelpers.actions.taskInput(user, "Add new task", "1234");
+    await TaskHelpers.actions.addTaskButton(user, "Add Task");
+    expect(mockAddTask).toBeCalledTimes(1);
+    expect(mockAddTask).toBeCalledWith({
+      projectId: "1",
+      taskId: "0",
+      description: "1234",
+    });
+  });
 });
-describe("adding and removing tasks", () => {
-  beforeEach(() => {
-    render(<Task handleAddTask={mockAddTask} />);
-  });
-  test("task is displayed when task added and no task message removed", async () => {
-    await TaskHelpers.actions.taskInput(user, "Add new task", "project task 1");
-    await TaskHelpers.actions.addTaskButton(user, "Add Task");
-    const { tasks } = TaskHelpers.getElements();
-    expect(tasks).toHaveLength(1);
-    expect(screen.getByText("project task 1")).toBeInTheDocument();
-    const { noTasksMessage } = TaskHelpers.getElements();
-    expect(noTasksMessage).not.toBeInTheDocument();
-  });
-  test("tasks can be added and removed", async () => {
-    await TaskHelpers.actions.taskInput(user, "Add new task", "project task 1");
-    await TaskHelpers.actions.addTaskButton(user, "Add Task");
-    const { tasks } = TaskHelpers.getElements();
-    expect(tasks).toHaveLength(1);
-    expect(screen.getByText("project task 1")).toBeInTheDocument();
-    await TaskHelpers.actions.taskInput(user, "Add new task", "project task 2");
-    await TaskHelpers.actions.addTaskButton(user, "Add Task");
-    const taskCount = screen.queryAllByRole("listitem");
-    expect(taskCount).toHaveLength(2);
-    expect(screen.getByText("project task 2")).toBeInTheDocument();
+
+describe("user clear button", async () => {
+  vi.clearAllMocks();
+  test("deletTask is called with correct props", async () => {
+    render(
+      <Task
+        handleAddTask={mockAddTask}
+        tasks={tasks}
+        projectId="1"
+        handleTaskDelete={mockhandleTaskDelete}
+      />
+    );
+    screen.debug();
     await TaskHelpers.actions.clearButton(user, "task0");
-    expect(screen.queryByText("project task 1")).not.toBeInTheDocument();
+    expect(mockhandleTaskDelete).toBeCalledTimes(1);
+    expect(mockhandleTaskDelete).toHaveBeenCalledWith({
+      projectId: "1",
+      taskId: "0",
+    });
   });
 });

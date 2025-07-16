@@ -5,8 +5,14 @@ export type TaskProps = {
   handleAddTask: (task: TaskItem) => void;
   projectId: string;
   tasks: TaskItem[];
-  handleTaskDelete: (projectId: string, taskId: string) => void;
+  handleTaskDelete: (data: TaskDeleteProps) => void;
 };
+
+export type TaskDeleteProps = {
+  projectId: string;
+  taskId: string;
+};
+
 const Task = ({
   handleAddTask,
   tasks,
@@ -66,11 +72,11 @@ const Task = ({
                 {task.description}
                 <button
                   onClick={() => {
-                    handleTaskDelete(projectId, task.taskId);
+                    handleTaskDelete({ projectId, taskId: task.taskId });
                   }}
                   data-testid={`task${task.taskId}`}
                 >
-                  Delete
+                  Clear
                 </button>
               </p>
             </li>

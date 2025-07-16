@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import { SelectedProject as SelectedProjectHelpers } from "../../../__testUtils__/helpers/SelectedProject.helpers";
-import { mockData as projectData } from "../../../__testUtils__/mocks/SelectedProject.mock";
+import { mockData as project } from "../../../__testUtils__/mocks/SelectedProject.mock";
 import SelectedProject from "./SelectedProject";
 import userEvent from "@testing-library/user-event";
 
@@ -10,8 +10,8 @@ describe("SelectedProject component", () => {
   beforeEach(() => {
     render(
       <SelectedProject
-        projectData={projectData}
-        handleDelete={mockHandleDelete}
+        project={project}
+        handleProjectDelete={mockHandleDelete}
       />
     );
   });
@@ -26,6 +26,6 @@ describe("SelectedProject component", () => {
   test("clear button handleDelete executed with correct id", async () => {
     await SelectedProjectHelpers.actions.deleteButton(user);
     expect(mockHandleDelete).toHaveBeenCalledTimes(1);
-    expect(mockHandleDelete).toBeCalledWith(projectData.id);
+    expect(mockHandleDelete).toBeCalledWith(project.id);
   });
 });
