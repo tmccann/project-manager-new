@@ -2,9 +2,15 @@ import { render, screen } from "@testing-library/react";
 import { mockData as projectData } from "../../__testUtils__/mocks/SelectedProject.mock";
 import ProjectDisplayPage from "./ProjectDisplayPage";
 
+type ProjectDisplayProps = {};
 describe("ProjectDisplay component", () => {
   beforeEach(() => {
-    render(<ProjectDisplayPage projectData={projectData} />);
+    render(
+      <ProjectDisplayPage
+        projectData={projectData}
+        handleDelete={handleDelete}
+      />
+    );
   });
   test("SelectedProject and Task compeonents render", () => {
     // basic test checking one clear indicator that each component has rendered
