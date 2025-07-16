@@ -4,6 +4,7 @@ export type Project = {
   description: string;
   dueDate: string;
   tasks: TaskItem[];
+
 };
 
 export type TaskItem = {
@@ -11,3 +12,4 @@ export type TaskItem = {
   taskId: string;
   description: string;
 };
+
