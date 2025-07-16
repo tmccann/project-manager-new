@@ -6,7 +6,7 @@ export const Task = {
     header: screen.getByRole("heading", { level: 2 }),
     taskInput: screen.getByLabelText("Add new task"),
     addTaskButton: screen.getByRole("button", { name: "Add Task" }),
-    tasks: screen.queryAllByRole("listitem"),
+    taskElements: screen.queryAllByRole("listitem"),
     noTasksMessage: screen.queryByText(
       "This project does not have any tasks yet."
     ),
@@ -19,6 +19,7 @@ export const Task = {
       await user.type(screen.getByLabelText(label), inputText);
     },
     async clearButton(user: UserEvent, testId: string) {
+      console.log(testId);
       await user.click(screen.getByTestId(testId));
     },
   },

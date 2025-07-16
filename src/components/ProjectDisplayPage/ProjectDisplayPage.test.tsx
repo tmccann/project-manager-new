@@ -2,13 +2,17 @@ import { render, screen } from "@testing-library/react";
 import { mockData as projectData } from "../../__testUtils__/mocks/SelectedProject.mock";
 import ProjectDisplayPage from "./ProjectDisplayPage";
 
-type ProjectDisplayProps = {};
+const mockhandleProjectDelete = vi.fn();
+const mockhandleAddTask = vi.fn();
+const mockhandleTaskDelete = vi.fn();
 describe("ProjectDisplay component", () => {
   beforeEach(() => {
     render(
       <ProjectDisplayPage
-        projectData={projectData}
-        handleDelete={handleDelete}
+        project={projectData}
+        handleProjectDelete={mockhandleProjectDelete}
+        handleAddTask={mockhandleAddTask}
+        handleTaskDelete={mockhandleTaskDelete}
       />
     );
   });

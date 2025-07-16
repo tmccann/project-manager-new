@@ -1,4 +1,4 @@
-import type { Project } from "../../../App";
+import type { Project } from "../../../types/types";
 export type SelectedProjectProps = {
   project: Project;
   handleProjectDelete: (id: string) => void;
@@ -22,5 +22,5 @@ const SelectedProject = ({
       <p>{project.description}</p>
     </header>
   );
-
+};
 export default SelectedProject;

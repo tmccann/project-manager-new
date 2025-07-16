@@ -3,6 +3,7 @@ import NoProject from "./components/NoProject/NoProject";
 import ProjectForm from "./components/ProjectForm/ProjectForm";
 import ProjectDisplayPage from "./components/ProjectDisplayPage/ProjectDisplayPage";
 import { Project, TaskItem } from "./types/types";
+import { TaskDeleteProps } from "./components/ProjectDisplayPage/Task/Task";
 
 export default function App() {
   const [projects, setProjects] = useState<Project[]>([
@@ -11,7 +12,10 @@ export default function App() {
       title: "demo 1",
       description: "this is first Project",
       dueDate: "07/28/2025",
-      tasks: [{ projectId: "1", taskId: "1", description: "test task" }],
+      tasks: [
+        { projectId: "1", taskId: "1", description: "test task" },
+        { projectId: "1", taskId: "2", description: "test task 2" },
+      ],
     },
   ]);
 
@@ -39,7 +43,8 @@ export default function App() {
   const handleAddTask = (task: TaskItem) => {
     console.log(task);
   };
-  const handleTaskDelete = (projectId: string, taskId: string) => {
+  const handleTaskDelete = (data: TaskDeleteProps) => {
+    const { projectId, taskId } = data;
     console.log(`projectId: ${projectId}  taskId: ${taskId}`);
   };
 
