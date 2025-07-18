@@ -19,7 +19,6 @@ export const Task = {
       await user.type(screen.getByLabelText(label), inputText);
     },
     async clearButton(user: UserEvent, testId: string) {
-      console.log(testId);
       await user.click(screen.getByTestId(testId));
     },
   },
