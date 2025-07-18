@@ -86,7 +86,6 @@ describe("user clear button", async () => {
         handleTaskDelete={mockhandleTaskDelete}
       />
     );
-    screen.debug();
     await TaskHelpers.actions.clearButton(user, "task0");
     expect(mockhandleTaskDelete).toBeCalledTimes(1);
     expect(mockhandleTaskDelete).toHaveBeenCalledWith({
