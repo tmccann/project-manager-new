@@ -2,7 +2,6 @@ import { render, screen } from "@testing-library/react";
 import ProjectForm from "./ProjectForm";
 import { ProjectForm as ProjectFormHelpers } from "../../__testUtils__/helpers/ProjectForm.helpers";
 import userEvent from "@testing-library/user-event";
-import ProjectDisplayPage from "../ProjectDisplayPage/ProjectDisplayPage";
 
 const mockSubmit = vi.fn();
 const modalRefMock = { current: { open: vi.fn() } };
