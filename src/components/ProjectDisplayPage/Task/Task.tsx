@@ -53,32 +53,45 @@ const Task = ({
   // };
   return (
     <section>
-      <h2>Tasks</h2>
+      <h2 className=" text-2xl font-bold text-stone-600 my-2">Tasks</h2>
       {/* label will be hidden later using tail wind sr-only */}
-      <label htmlFor="task" style={{ position: "absolute", left: "-9999px" }}>
-        Add new task
-      </label>
-      <input type="text" id="task" ref={task} minLength={4} />
-      <button onClick={handleNewTaskValidation}>Add Task</button>
+      <div className="flex gap-2 items-center">
+        <label htmlFor="task" style={{ position: "absolute", left: "-9999px" }}>
+          Add new task
+        </label>
+        <input
+          className=" bg-stone-300 rounded-sm py-1 px-2 mb-2"
+          type="text"
+          id="task"
+          ref={task}
+          minLength={4}
+        />
+        <button className="py-1 px-2 mb-2 " onClick={handleNewTaskValidation}>
+          Add Task
+        </button>
+      </div>
       {error && <p>added tasks must have atleast 4 characters</p>}
       {/*if no tasks show no task message */}
       {tasks.length === 0 ? (
         <p>This project does not have any tasks yet.</p>
       ) : (
-        <ul>
+        <ul className=" bg-stone-100 rounded-sm">
           {tasks.map((task) => (
-            <li key={task.taskId} id={task.taskId}>
-              <p>
-                {task.description}
-                <button
-                  onClick={() => {
-                    handleTaskDelete({ projectId, taskId: task.taskId });
-                  }}
-                  data-testid={`task${task.taskId}`}
-                >
-                  Clear
-                </button>
-              </p>
+            <li
+              className=" flex justify-between my-2 p-1"
+              key={task.taskId}
+              id={task.taskId}
+            >
+              <p>{task.description}</p>
+              <button
+                className="text-stone-700 hover:text-red-500"
+                onClick={() => {
+                  handleTaskDelete({ projectId, taskId: task.taskId });
+                }}
+                data-testid={`task${task.taskId}`}
+              >
+                Clear
+              </button>
             </li>
           ))}
         </ul>

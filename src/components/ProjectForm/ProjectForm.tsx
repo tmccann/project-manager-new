@@ -80,27 +80,51 @@ const ProjectForm = ({ handleSubmit }: ProjectFormProps) => {
   const hasErrors = Object.values(errors).some(Boolean);
   return (
     <section>
-      <form onSubmit={handleFormValidation}>
-        <div>
-          <button type="button" onClick={onClear}>
+      <form className="flex flex-col w-full" onSubmit={handleFormValidation}>
+        <div className=" flex justify-end gap-2">
+          <button
+            className="py-2 px-4 rounded-md mb-6 font-semibold"
+            type="button"
+            onClick={onClear}
+          >
             Cancel
           </button>
-          <button type="submit">Save</button>
+          <button
+            className="bg-stone-900 hover:bg-stone-600 text-stone-200 transition-colors py-2 px-4 rounded-md mb-6 "
+            type="submit"
+          >
+            Save
+          </button>
         </div>
         {/* title Input */}
-        <label htmlFor="title">Title</label>
-        <input type="text" name="title" id="title" ref={title} />
-        {/* description */}
-        <label htmlFor="description">Description</label>
+        <label className=" block" htmlFor="title">
+          Title
+        </label>
         <input
+          className="px-2 py-1 rounded-sm bg-stone-200 border-b-2 border-stone-300 focus:outline-none focus:border-stone-400"
+          type="text"
+          name="title"
+          id="title"
+          ref={title}
+        />
+        {/* description */}
+        <label className=" block" htmlFor="description">
+          Description
+        </label>
+        <input
+          className="px-2 py-1 rounded-sm bg-stone-200 border-b-2 border-stone-300 focus:outline-none focus:border-stone-400"
           type="text"
           name="description"
           id="description"
           ref={description}
         />
         {/*due date */}
-        <label htmlFor="dueDate">Due Date</label>
+
+        <label className=" block" htmlFor="dueDate">
+          Due Date
+        </label>
         <input
+          className="px-2 py-1 rounded-sm bg-stone-200 border-b-2 border-stone-300 focus:outline-none focus:border-stone-400"
           type="string"
           name="dueDate"
           id="dueDate"
