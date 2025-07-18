@@ -1,6 +1,8 @@
 import { defineConfig as defineVitestConfig } from "vitest/config";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineVitestConfig({
+  plugins: [tailwindcss()],
   test: {
     environment: "jsdom",
     globals: true,

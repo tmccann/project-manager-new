@@ -1,3 +1,5 @@
+import logo from "../../assets/no-projects.png";
+
 type NoProjectProps = {
   onAddProject: () => void;
   hasProjects: boolean;
@@ -6,24 +8,33 @@ type NoProjectProps = {
 const NoProject = ({ onAddProject, hasProjects }: NoProjectProps) => {
   const createProject = "Create a new project to get started";
   return (
-    <section>
+    <section className=" flex flex-col gap-1.5">
+      <div>
+        <img className=" w-16 h-16 m-auto" src={logo} alt="" />
+        <p className=" font-semibold text-2xl text-stone-500 ">
+          No project selected
+        </p>
+      </div>
+
       {/* turnery operator for if projects */}
       {hasProjects ? (
         // message if projects
-        <div>
-          <p>No project selected</p>
-          <p>Select a project</p>
-          <p>or</p>
-          <p>{createProject}</p>
+        <div className="flex flex-col text-stone-400 my-2">
+          <p>Select a project or {createProject}</p>
         </div>
       ) : (
         // message if none
-        <div>
+        <div className="flex flex-col text-stone-400 my-2">
           <p>{createProject}</p>
         </div>
       )}
       {/* Show button: "Create New Project" */}
-      <button onClick={onAddProject}>Create New Project</button>
+      <button
+        className=" m-auto bg-stone-700 hover:bg-stone-600 text-stone-400 hover:text-stone-200 transition-colors py-2 px-2 rounded-md mb-6 text-sm font-semibold"
+        onClick={onAddProject}
+      >
+        Create New Project
+      </button>
     </section>
   );
 };

@@ -49,7 +49,7 @@ export default function App() {
   };
 
   return (
-    <div>
+    <main className=" h-screen flex mt-8 gap-8">
       {/* <NoProject hasProjects={true} onAddProject={onAddProject} /> */}
       {/* <ProjectForm handleSubmit={handleSubmit} /> */}
 
@@ -59,6 +59,6 @@ export default function App() {
         handleAddTask={handleAddTask}
         handleTaskDelete={handleTaskDelete}
       />
-    </div>
+    </main>
   );
 }
