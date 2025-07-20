@@ -3,18 +3,32 @@ import { UserEvent } from "@testing-library/user-event";
 
 const today = new Date().toLocaleDateString();
 
+export const validInput = {
+  title: "My Valid Title",
+  description: "My Valid Description",
+  dueDate: today,
+};
+export const invalidInputs = {
+  title: "123",
+  description: "456",
+  dueDate: "11/11/2021",
+};
+export const errorMessages = {
+  title: "Title to short!",
+  description: "Description to short!",
+  dueDate: "Due date must be today or later",
+};
 export const ProjectForm = {
-  validInput: {
-    title: "My Valid Title",
-    description: "My Valid Description",
-    dueDate: today,
-  },
   getElements: () => ({
     titleInput: screen.getByLabelText("Title"),
     descriptionInput: screen.getByLabelText("Description"),
     dueDateInput: screen.getByLabelText("Due Date"),
     saveButton: screen.getByRole("button", { name: "Save" }),
     cancelButton: screen.getByRole("button", { name: "Cancel" }),
+    modalHeader: screen.findByText(/Form Error/i),
+    titleError: screen.queryByText(errorMessages.title),
+    descriptionError: screen.queryByText(errorMessages.description),
+    dueDateError: screen.queryByText(errorMessages.dueDate),
   }),
   actions: {
     buttons: {
@@ -28,28 +42,34 @@ export const ProjectForm = {
     // valid inputs
     validInputs: {
       async enterValidTitle(user: UserEvent) {
-        await user.type(screen.getByLabelText("Title"), "My Valid Title");
+        await user.type(screen.getByLabelText("Title"), validInput.title);
       },
       async enterValidDescription(user: UserEvent) {
         await user.type(
           screen.getByLabelText("Description"),
-          "My Valid Description"
+          validInput.description
         );
       },
       async enterValidDate(user: UserEvent) {
-        await user.type(screen.getByLabelText("Due Date"), today);
+        await user.type(screen.getByLabelText("Due Date"), validInput.dueDate);
       },
     },
     invalidInputs: {
       //  invalid Inputs
       async enterInvalidTitle(user: UserEvent) {
-        await user.type(screen.getByLabelText("Title"), "123");
+        await user.type(screen.getByLabelText("Title"), invalidInputs.title);
       },
       async enterInvalidDescription(user: UserEvent) {
-        await user.type(screen.getByLabelText("Description"), "456");
+        await user.type(
+          screen.getByLabelText("Description"),
+          invalidInputs.description
+        );
       },
       async enterInvalidDate(user: UserEvent) {
-        await user.type(screen.getByLabelText("Due Date"), "31/12/2020");
+        await user.type(
+          screen.getByLabelText("Due Date"),
+          invalidInputs.dueDate
+        );
       },
     },
   },
