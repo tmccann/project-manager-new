@@ -1,15 +1,14 @@
 import { screen } from "@testing-library/react";
 import type { UserEvent } from "@testing-library/user-event";
 
+const sharedMessage = "Create a new project to get started";
 export const NoProject = {
   // Using queryByText instead of getByText to safely handle conditional rendering
   getElements: () => ({
-    messages: [
-      screen.queryByText("No project selected"),
-      screen.queryByText("Select a project"),
-      screen.queryByText("or"),
-    ],
-    sharedMessage: screen.getByText("Create a new project to get started"),
+    hasProjectsMessage: screen.queryByText(
+      `Select a project or ${sharedMessage} `
+    ),
+    sharedMessage: screen.queryByText(sharedMessage),
     addNewProjectButton: screen.getByRole("button", {
       name: "Create New Project",
     }),

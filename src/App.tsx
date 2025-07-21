@@ -36,8 +36,10 @@ export default function App() {
     console.log(id);
   };
 
-  const handleSubmit = () => {
-    console.log("submitted");
+  const handleSubmit = ({ title, description, dueDate }) => {
+    console.log(
+      `title: ${title} description: ${description} dueDate:${dueDate}`
+    );
   };
 
   const handleAddTask = (task: TaskItem) => {
@@ -51,14 +53,14 @@ export default function App() {
   return (
     <main className=" h-screen flex mt-8 gap-8">
       {/* <NoProject hasProjects={true} onAddProject={onAddProject} /> */}
-      {/* <ProjectForm handleSubmit={handleSubmit} /> */}
+      <ProjectForm handleSubmit={handleSubmit} />
 
-      <ProjectDisplayPage
+      {/* <ProjectDisplayPage
         project={selectedProject("1")!}
         handleProjectDelete={handleProjectDelete}
         handleAddTask={handleAddTask}
         handleTaskDelete={handleTaskDelete}
-      />
+      /> */}
     </main>
   );
 }

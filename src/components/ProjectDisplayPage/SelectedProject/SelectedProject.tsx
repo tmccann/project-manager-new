@@ -12,7 +12,7 @@ const SelectedProject = ({
     month: "short",
     year: "numeric",
   });
-  console.log(formattedDate);
+
   return (
     <header className="border-b-2 border-stone-300">
       <div className=" flex justify-between">

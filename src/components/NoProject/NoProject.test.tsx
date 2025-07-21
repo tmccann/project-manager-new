@@ -9,10 +9,9 @@ const user = userEvent.setup();
 describe("NoProject Component props has project true", () => {
   test("renders create project message when hasProjects is true", () => {
     render(<NoProject hasProjects={true} onAddProject={mockOnAddProject} />);
-    const { messages, sharedMessage, addNewProjectButton } =
+    const { hasProjectsMessage, addNewProjectButton } =
       NoProjectHelpers.getElements();
-    messages.forEach((msg) => expect(msg).toBeInTheDocument());
-    expect(sharedMessage).toBeInTheDocument();
+    expect(hasProjectsMessage);
     expect(addNewProjectButton).toBeInTheDocument();
   });
 
