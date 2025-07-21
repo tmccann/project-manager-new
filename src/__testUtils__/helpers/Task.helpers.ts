@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react";
 import { UserEvent } from "@testing-library/user-event";
 
-export const Task = {
+export const TaskHelpers = {
   getElements: () => ({
     header: screen.getByRole("heading", { level: 2 }),
     taskInput: screen.getByLabelText("Add new task"),

@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import { SelectedProject as SelectedProjectHelpers } from "../../../__testUtils__/helpers/SelectedProject.helpers";
+import { SelectedProjectHelpers } from "../../../__testUtils__/helpers/SelectedProject.helpers";
 import { mockData as project } from "../../../__testUtils__/mocks/SelectedProject.mock";
 import SelectedProject from "./SelectedProject";
 import userEvent from "@testing-library/user-event";

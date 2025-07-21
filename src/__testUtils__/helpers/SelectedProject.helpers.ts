@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react";
 import { UserEvent } from "@testing-library/user-event";
 import { mockData } from "../mocks/SelectedProject.mock";
 
-export const SelectedProject = {
+export const SelectedProjectHelpers = {
   getDynamicElements: () => ({
     title: screen.getByRole("heading", { name: mockData.title }),
     dueDate: screen.getByText(mockData.dueDate),

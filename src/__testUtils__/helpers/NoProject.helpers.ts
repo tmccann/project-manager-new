@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react";
 import type { UserEvent } from "@testing-library/user-event";
 
 const sharedMessage = "Create a new project to get started";
-export const NoProject = {
+export const NoProjectHelpers = {
   // Using queryByText instead of getByText to safely handle conditional rendering
   getElements: () => ({
     hasProjectsMessage: screen.queryByText(

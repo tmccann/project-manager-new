@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import ProjectForm from "./ProjectForm";
-import { ProjectForm as ProjectFormHelpers } from "../../__testUtils__/helpers/ProjectForm.helpers";
+import { ProjectFormHelpers } from "../../__testUtils__/helpers/ProjectForm.helpers";
 import { validInput } from "../../__testUtils__/helpers/ProjectForm.helpers";
 import userEvent from "@testing-library/user-event";
 

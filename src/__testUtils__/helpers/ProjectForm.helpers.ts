@@ -19,7 +19,7 @@ export const errorMessages = {
   description: "Description too short!",
   dueDate: "Due date must be today or later",
 };
-export const ProjectForm = {
+export const ProjectFormHelpers = {
   getElements: () => ({
     titleInput: screen.getByLabelText("Title"),
     descriptionInput: screen.getByLabelText("Description"),
