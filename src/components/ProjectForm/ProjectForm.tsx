@@ -1,97 +1,52 @@
 import React, { useRef, useState } from "react";
 import Modal from "./ErrorModal/Modal";
 import { ModalHandle } from "./ErrorModal/Modal";
+import { ProjectFormData, ErrorProps } from "./types";
+import { ValidateFormData } from "./helpers/dataValidation";
 
 type ProjectFormProps = {
   handleSubmit: (data: ProjectFormData) => void;
 };
 
-export type ProjectFormData = {
-  title: string;
-  description: string;
-  dueDate: string;
+const intialErrors = {
+  title: "",
+  description: "",
+  dueDate: "",
 };
-
-export type ErrorProps = {
-  title?: string;
-  description?: string;
-  dueDate?: string;
-};
-
 const ProjectForm = ({ handleSubmit }: ProjectFormProps) => {
-  const [errors, setErrors] = useState<ErrorProps>({
-    title: "",
-    description: "",
-    dueDate: "",
-  });
+  const [errors, setErrors] = useState<ErrorProps>(intialErrors);
 
-  const title = useRef<HTMLInputElement>(null);
-  const description = useRef<HTMLInputElement>(null);
-  const dueDate = useRef<HTMLInputElement>(null);
+  const titleRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLInputElement>(null);
+  const dueDateRef = useRef<HTMLInputElement>(null);
   const modal = useRef<ModalHandle>(null);
-
-  const onValidText = (ref: React.RefObject<HTMLInputElement>) => {
-    const textElement = ref.current;
-    if (!textElement) return null;
-    const val = textElement.value;
-    return val.length >= 4 ? val : null;
-  };
-
-  const isValidDate = (ref: React.RefObject<HTMLInputElement>) => {
-    const dateElement = ref.current;
-    if (!dateElement) return null;
-    const val = dateElement.value;
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const enteredDate = new Date(val);
-    return enteredDate >= today ? val : null;
-  };
 
   const handleFormValidation = (e: React.FormEvent) => {
     e.preventDefault();
-    const userTitle = onValidText(title);
-    const userDescription = onValidText(description);
-    const userDueDate = isValidDate(dueDate);
-
-    const newErrors: ErrorProps = {};
-    if (!userTitle || userTitle.trim().length < 4) {
-      newErrors.title = "Title to short!";
-    }
-    if (!userDescription || userDescription.trim().length < 4) {
-      newErrors.description = "Description to short!";
-    }
-    if (!userDueDate) {
-      newErrors.dueDate = "Due date must be today or later";
-    }
-
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length > 0) {
+    const title: string = titleRef.current?.value ?? "";
+    const description: string = descriptionRef.current?.value ?? "";
+    const dueDate: string = dueDateRef.current?.value ?? "";
+    const results = ValidateFormData({ title, description, dueDate });
+    if ("errors" in results) {
+      setErrors({
+        title: results.errors.title,
+        description: results.errors.description,
+        dueDate: results.errors.dueDate,
+      });
       modal.current?.open();
-      return;
     } else {
-      if (userTitle && userDescription && userDueDate) {
-        const data: ProjectFormData = {
-          title: userTitle,
-          description: userDescription,
-          dueDate: userDueDate,
-        };
-        handleSubmit(data);
-        onClear();
-      }
+      const data = results.data;
+      handleSubmit(data);
     }
   };
 
   const onClear = () => {
-    if (title.current) title.current.value = "";
-    if (description.current) description.current.value = "";
-    if (dueDate.current) dueDate.current.value = "";
-    setErrors({
-      title: "",
-      description: "",
-      dueDate: "",
-    });
+    if (titleRef.current) titleRef.current.value = "";
+    if (descriptionRef.current) descriptionRef.current.value = "";
+    if (dueDateRef.current) dueDateRef.current.value = "";
+    setErrors(intialErrors);
   };
+
   const hasErrors = errors.title || errors.description || errors.dueDate;
   return (
     <section>
@@ -140,7 +95,7 @@ const ProjectForm = ({ handleSubmit }: ProjectFormProps) => {
           type="text"
           name="title"
           id="title"
-          ref={title}
+          ref={titleRef}
         />
 
         <label className="block" htmlFor="description">
@@ -151,7 +106,7 @@ const ProjectForm = ({ handleSubmit }: ProjectFormProps) => {
           type="text"
           name="description"
           id="description"
-          ref={description}
+          ref={descriptionRef}
         />
 
         <label className="block" htmlFor="dueDate">
@@ -162,7 +117,7 @@ const ProjectForm = ({ handleSubmit }: ProjectFormProps) => {
           type="text"
           name="dueDate"
           id="dueDate"
-          ref={dueDate}
+          ref={dueDateRef}
         />
       </form>
     </section>

@@ -2,11 +2,12 @@ import { screen } from "@testing-library/react";
 import { UserEvent } from "@testing-library/user-event";
 
 const today = new Date().toLocaleDateString();
+console.log(today);
 
 export const validInput = {
   title: "My Valid Title",
-  description: "My Valid Description",
   dueDate: today,
+  description: "My Valid Description",
 };
 export const invalidInputs = {
   title: "123",
@@ -14,8 +15,8 @@ export const invalidInputs = {
   dueDate: "11/11/2021",
 };
 export const errorMessages = {
-  title: "Title to short!",
-  description: "Description to short!",
+  title: "Title too short!",
+  description: "Description too short!",
   dueDate: "Due date must be today or later",
 };
 export const ProjectForm = {
@@ -25,7 +26,6 @@ export const ProjectForm = {
     dueDateInput: screen.getByLabelText("Due Date"),
     saveButton: screen.getByRole("button", { name: "Save" }),
     cancelButton: screen.getByRole("button", { name: "Cancel" }),
-    modalHeader: screen.findByText(/Form Error/i),
     titleError: screen.queryByText(errorMessages.title),
     descriptionError: screen.queryByText(errorMessages.description),
     dueDateError: screen.queryByText(errorMessages.dueDate),
