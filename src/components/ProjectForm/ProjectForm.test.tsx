@@ -3,24 +3,21 @@ import ProjectForm from "./ProjectForm";
 import { ProjectFormHelpers } from "../../__testUtils__/helpers/ProjectForm.helpers";
 import { validInput } from "../../__testUtils__/helpers/ProjectForm.helpers";
 import userEvent from "@testing-library/user-event";
+import {
+  setupModalMocks,
+  cleanupModalMocks,
+} from "../../__testUtils__/mocks/ModalMocks";
 
 const mockSubmit = vi.fn();
 const user = userEvent.setup();
 
 beforeEach(() => {
   vi.restoreAllMocks();
-
-  const portalRoot = document.createElement("div");
-  portalRoot.setAttribute("id", "modal-root");
-  document.body.appendChild(portalRoot);
-
-  window.HTMLDialogElement.prototype.showModal = vi.fn();
-  window.HTMLDialogElement.prototype.close = vi.fn();
+  setupModalMocks();
 });
 
 afterEach(() => {
-  const portalRoot = document.getElementById("modal-root");
-  if (portalRoot) portalRoot.remove();
+  cleanupModalMocks();
 });
 
 describe("ProjectForm component", () => {

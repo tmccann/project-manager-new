@@ -3,9 +3,9 @@ import { UserEvent } from "@testing-library/user-event";
 
 export const SideBarHelpers = {
   getElements: () => ({
-    Heading: screen.getByRole("heading", { name: "Your Projects" }),
-    AddProjectButton: screen.getByTestId("SideBarAddProject"),
-    Links: screen.queryAllByRole("listitem"),
+    heading: screen.getByRole("heading", { name: "Your Projects" }),
+    addProjectButton: screen.getByTestId("SideBarAddProject"),
+    links: screen.queryAllByRole("listitem"),
   }),
   actions: {
     async linkButton(user: UserEvent, name: string) {
