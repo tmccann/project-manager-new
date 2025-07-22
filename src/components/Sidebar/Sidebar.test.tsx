@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import Sidebar from "./Sidebar";
 import { mockProjects } from "../../__testUtils__/mocks/SideBar.mock";
 import userEvent from "@testing-library/user-event";
+import { SideBarHelpers } from "../../__testUtils__/helpers/SideBar.helpers";
 
 const user = userEvent.setup();
 const mockGetSelectedProject = vi.fn();
@@ -13,9 +14,7 @@ describe("Sidebar component ", () => {
     expect(
       screen.getByRole("heading", { name: "Your Projects" })
     ).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: "Create New Project" })
-    ).toBeInTheDocument();
+    expect(screen.getByTestId("SideBarAddProject")).toBeInTheDocument();
     expect(screen.queryAllByRole("listitem")).toHaveLength(0);
   });
   test("Links are visable when projects not empty", () => {
@@ -37,7 +36,8 @@ describe("Sidebar actions", () => {
         getSelectedProject={mockGetSelectedProject}
       />
     );
-    await user.click(screen.getByRole("button", { name: "demo 1" }));
+    await SideBarHelpers.actions.linkButton(user, "demo 1");
+    expect(mockGetSelectedProject).toHaveBeenCalled();
     expect(mockGetSelectedProject).toBeCalledWith("1");
   });
 });

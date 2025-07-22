@@ -17,7 +17,7 @@ describe("NoProject Component props has project true", () => {
 
   test("mockOnAddProject is executed when addProjectButton Clicked", async () => {
     render(<NoProject hasProjects={false} onAddProject={mockOnAddProject} />);
-    await NoProjectHelpers.actions.clickAddButton(user, "Create New Project");
+    await NoProjectHelpers.actions.clickCreateNewProject(user);
   });
 });
 

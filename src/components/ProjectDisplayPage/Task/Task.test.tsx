@@ -54,18 +54,18 @@ describe("user input actions", () => {
     );
   });
   test("validation: task input displays error if under 4 charcters", async () => {
-    await TaskHelpers.actions.taskInput(user, "Add new task", "123");
-    await TaskHelpers.actions.addTaskButton(user, "Add Task");
+    await TaskHelpers.actions.taskInput(user, "123");
+    await TaskHelpers.actions.addTaskButton(user);
     expect(screen.getByText(taskErrorMessage)).toBeInTheDocument();
   });
   test("validation: task input displays no error if over 4 charcters", async () => {
-    await TaskHelpers.actions.taskInput(user, "Add new task", "1234");
-    await TaskHelpers.actions.addTaskButton(user, "Add Task");
+    await TaskHelpers.actions.taskInput(user, "1234");
+    await TaskHelpers.actions.addTaskButton(user);
     expect(screen.queryByText(taskErrorMessage)).not.toBeInTheDocument();
   });
   test("addtask is called with correct props", async () => {
-    await TaskHelpers.actions.taskInput(user, "Add new task", "1234");
-    await TaskHelpers.actions.addTaskButton(user, "Add Task");
+    await TaskHelpers.actions.taskInput(user, "1234");
+    await TaskHelpers.actions.addTaskButton(user);
     expect(mockAddTask).toBeCalledTimes(1);
     expect(mockAddTask).toBeCalledWith({
       projectId: "1",

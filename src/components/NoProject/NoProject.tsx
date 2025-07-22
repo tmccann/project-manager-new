@@ -31,6 +31,7 @@ const NoProject = ({ onAddProject, hasProjects }: NoProjectProps) => {
       {/* Show button: "Create New Project" */}
       <button
         className=" m-auto bg-stone-700 hover:bg-stone-600 text-stone-400 hover:text-stone-200 transition-colors py-2 px-2 rounded-md mb-6 text-sm font-semibold"
+        data-testid="NoProjectAddProject"
         onClick={onAddProject}
       >
         Create New Project

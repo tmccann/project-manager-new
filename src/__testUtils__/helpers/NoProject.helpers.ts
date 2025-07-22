@@ -9,14 +9,12 @@ export const NoProjectHelpers = {
       `Select a project or ${sharedMessage} `
     ),
     sharedMessage: screen.queryByText(sharedMessage),
-    addNewProjectButton: screen.getByRole("button", {
-      name: "Create New Project",
-    }),
+    addNewProjectButton: screen.getByTestId("NoProjectAddProject"),
   }),
 
   actions: {
-    async clickAddButton(user: UserEvent, label: string) {
-      await user.click(screen.getByRole("button", { name: label }));
+    async clickCreateNewProject(user: UserEvent) {
+      await user.click(screen.getByTestId("NoProjectAddProject"));
     },
   },
 };

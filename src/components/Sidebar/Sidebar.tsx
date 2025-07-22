@@ -12,7 +12,10 @@ const Sidebar = ({ projects, getSelectedProject }: SideBarProps) => {
         Your Projects
       </h2>
 
-      <button className="bg-stone-700 hover:bg-stone-600 text-stone-400 hover:text-stone-200 transition-colors py-2 px-2 rounded-md mb-6 text-sm font-semibold">
+      <button
+        className="bg-stone-700 hover:bg-stone-600 text-stone-400 hover:text-stone-200 transition-colors py-2 px-2 rounded-md mb-6 text-sm font-semibold"
+        data-testid="SideBarAddProject"
+      >
         Create New Project
       </button>
 

@@ -12,11 +12,11 @@ export const TaskHelpers = {
     ),
   }),
   actions: {
-    async addTaskButton(user: UserEvent, name: string) {
-      await user.click(screen.getByRole("button", { name: name }));
+    async addTaskButton(user: UserEvent) {
+      await user.click(screen.getByRole("button", { name: "Add Task" }));
     },
-    async taskInput(user: UserEvent, label: string, inputText: string) {
-      await user.type(screen.getByLabelText(label), inputText);
+    async taskInput(user: UserEvent, inputText: string) {
+      await user.type(screen.getByLabelText("Add new task"), inputText);
     },
     async clearButton(user: UserEvent, testId: string) {
       await user.click(screen.getByTestId(testId));
