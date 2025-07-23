@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import Sidebar from "./Sidebar";
 import { mockProjects } from "../../__testUtils__/mocks/SideBar.mock";
 import userEvent from "@testing-library/user-event";
@@ -11,11 +11,10 @@ describe("Sidebar component ", () => {
     render(
       <Sidebar projects={[]} getSelectedProject={mockGetSelectedProject} />
     );
-    expect(
-      screen.getByRole("heading", { name: "Your Projects" })
-    ).toBeInTheDocument();
-    expect(screen.getByTestId("SideBarAddProject")).toBeInTheDocument();
-    expect(screen.queryAllByRole("listitem")).toHaveLength(0);
+    const { heading, addProjectButton, links } = SideBarHelpers.getElements();
+    expect(heading).toBeInTheDocument();
+    expect(addProjectButton).toBeInTheDocument();
+    expect(links).toHaveLength(0);
   });
   test("Links are visable when projects not empty", () => {
     render(
@@ -24,12 +23,13 @@ describe("Sidebar component ", () => {
         getSelectedProject={mockGetSelectedProject}
       />
     );
+    const { links } = SideBarHelpers.getElements();
     const projectsLenth = mockProjects.length;
-    expect(screen.queryAllByRole("listitem")).toHaveLength(projectsLenth);
+    expect(links).toHaveLength(projectsLenth);
   });
 });
 describe("Sidebar actions", () => {
-  test("test", async () => {
+  test("Selected project is call when link clicked", async () => {
     render(
       <Sidebar
         projects={mockProjects}
