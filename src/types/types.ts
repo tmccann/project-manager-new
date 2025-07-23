@@ -4,7 +4,6 @@ export type Project = {
   description: string;
   dueDate: string;
   tasks: TaskItem[];
-
 };
 
 export type TaskItem = {
@@ -13,3 +12,8 @@ export type TaskItem = {
   description: string;
 };
 
+export type PageState =
+  | { view: "NoProject" }
+  | { view: "Form" }
+  | { view: "Project"; projectId: string }
+  | { view: "NotFound" };
