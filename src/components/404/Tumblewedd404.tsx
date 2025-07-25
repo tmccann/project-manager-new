@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import reactLogo from "../../assets/React.svg";
 
 export default function Tumbleweed404() {
-  const logoRef = useRef<HTMLImageElement | null>(null); // ✅ move useRef here
+  const logoRef = useRef<HTMLImageElement | null>(null);
 
   useEffect(() => {
     const logo = logoRef.current;
