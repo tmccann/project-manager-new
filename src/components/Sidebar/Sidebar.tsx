@@ -12,7 +12,7 @@ const Sidebar = ({
   onAddProject,
 }: SideBarProps) => {
   return (
-    <aside className="bg-stone-900 px-8 pt-16 h-screen rounded-tr-2xl md:w-72 text-stone-200">
+    <aside className="bg-stone-900 px-8 pt-16 h-screen rounded-tr-2xl md:w-72 text-stone-200 mt-8">
       <h2 className="text-xl font-bold mb-8 uppercase border-b border-stone-700 pb-2">
         Your Projects
       </h2>

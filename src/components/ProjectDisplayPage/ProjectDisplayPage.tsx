@@ -17,7 +17,7 @@ const ProjectDisplayPage = ({
   handleTaskDelete,
 }: ProjectDisplayPageProps) => {
   return (
-    <section>
+    <section className="max-w-8/12 text-left pt-16">
       <SelectedProject
         project={project}
         handleProjectDelete={handleProjectDelete}

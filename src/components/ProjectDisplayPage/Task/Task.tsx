@@ -34,7 +34,8 @@ const Task = ({
 
   const handleNewTaskValidation = () => {
     const newTask = onValidText(task);
-    const taskId = tasks.length === 0 ? "0" : tasks.length.toString();
+    const taskId = tasks.length === 0 ? "1" : (tasks.length + 1).toString();
+
     if (newTask) {
       setError(false);
       handleAddTask({ projectId, taskId, description: newTask });

@@ -6,6 +6,7 @@ import { ValidateFormData } from "./helpers/dataValidation";
 
 type ProjectFormProps = {
   handleSubmit: (data: ProjectFormData) => void;
+  onCancel: () => void;
 };
 
 const intialErrors = {
@@ -13,7 +14,7 @@ const intialErrors = {
   description: "",
   dueDate: "",
 };
-const ProjectForm = ({ handleSubmit }: ProjectFormProps) => {
+const ProjectForm = ({ handleSubmit, onCancel }: ProjectFormProps) => {
   const [errors, setErrors] = useState<ErrorProps>(intialErrors);
 
   const titleRef = useRef<HTMLInputElement>(null);
@@ -37,19 +38,23 @@ const ProjectForm = ({ handleSubmit }: ProjectFormProps) => {
     } else {
       const data = results.data;
       handleSubmit(data);
+      onClear();
     }
   };
 
   const onClear = () => {
+    // clear refs
     if (titleRef.current) titleRef.current.value = "";
     if (descriptionRef.current) descriptionRef.current.value = "";
     if (dueDateRef.current) dueDateRef.current.value = "";
+    // clear errors
     setErrors(intialErrors);
+    onCancel();
   };
 
   const hasErrors = errors.title || errors.description || errors.dueDate;
   return (
-    <section>
+    <section className="mt-16">
       <Modal ref={modal}>
         {hasErrors && (
           <div>
@@ -70,7 +75,10 @@ const ProjectForm = ({ handleSubmit }: ProjectFormProps) => {
           </div>
         )}
       </Modal>
-      <form className="flex flex-col w-full" onSubmit={handleFormValidation}>
+      <form
+        className="flex flex-col max-w-8/12 text-left"
+        onSubmit={handleFormValidation}
+      >
         <div className="flex justify-end gap-2">
           <button
             className="py-2 px-4 rounded-md mb-6 font-semibold"
