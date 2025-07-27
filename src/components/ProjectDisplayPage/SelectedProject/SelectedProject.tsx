@@ -16,8 +16,8 @@ const SelectedProject = ({
   return (
     <header className="border-b-2 border-stone-300">
       <div className=" flex justify-between">
-        {/* display title and delete button */}
-        {/* delete button should pass project id*/}
+        {/* Display title and delete button */}
+        {/* Delete button should pass project id*/}
         <h1 className=" text-3xl font-bold text-stone-600 mb-2">
           {project.title}
         </h1>
@@ -28,9 +28,9 @@ const SelectedProject = ({
           Delete
         </button>
       </div>
-      {/* display due date */}
+      {/* Display due date */}
       <p className=" mb-4 text-stone-400">{formattedDate}</p>
-      {/* display discription  */}
+      {/* Display discription  */}
       <p className="text-stone-600 mb-8">{project.description}</p>
     </header>
   );

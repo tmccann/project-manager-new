@@ -1,13 +1,16 @@
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { SelectedProjectHelpers } from "../../../__testUtils__/helpers/SelectedProject.helpers";
 import { mockData as project } from "../../../__testUtils__/mocks/SelectedProject.mock";
 import SelectedProject from "./SelectedProject";
 import userEvent from "@testing-library/user-event";
 
+import { formattedDate } from "../../../__testUtils__/helpers/ProjectForm.helpers";
+console.log(formattedDate);
 const user = userEvent.setup();
 const mockHandleDelete = vi.fn();
 describe("SelectedProject component", () => {
   beforeEach(() => {
+    vi.clearAllMocks();
     render(
       <SelectedProject
         project={project}
@@ -16,11 +19,11 @@ describe("SelectedProject component", () => {
     );
   });
   test("title, description, dueDate and clear button are rendered ", () => {
-    const { title, description, dueDate, deleteButton } =
+    const { title, description, deleteButton } =
       SelectedProjectHelpers.getDynamicElements();
     expect(title).toBeInTheDocument();
     expect(description).toBeInTheDocument();
-    expect(dueDate).toBeInTheDocument();
+    expect(screen.getByText(formattedDate)).toBeInTheDocument();
     expect(deleteButton).toBeInTheDocument();
   });
   test("clear button handleDelete executed with correct id", async () => {

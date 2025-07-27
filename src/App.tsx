@@ -9,7 +9,7 @@ import { ProjectFormData } from "./components/ProjectForm/types";
 import Tumbleweed404 from "./components/404/Tumblewedd404";
 
 export default function App() {
-  // type PageState =
+  // Type PageState =
   // | { view: "NoProject" }
   // | { view: "Form" }
   // | { view: "Project"; projectId: string }
@@ -24,12 +24,14 @@ export default function App() {
     setPageState({ view: "Form" });
   };
 
-  //  if projectForm cancelled pafeState set to {view: noProject}
+  //  If projectForm cancelled pafeState set to {view: noProject}
   const onCancel = () => setPageState({ view: "NoProject" });
 
   const handleSubmit = (data: ProjectFormData) => {
     const { title, description, dueDate } = data;
-    const id = Number(projects[projects.length - 1].id) + 1;
+    const id = projects.length
+      ? Number(projects[projects.length - 1].id) + 1
+      : 1;
     setProjects((prev) => {
       return [
         ...prev,
@@ -45,11 +47,13 @@ export default function App() {
   };
 
   const getSelectedProject = (selectedProjectId: string) => {
-    !isNaN(Number(selectedProjectId))
-      ? setPageState({ view: "Project", projectId: selectedProjectId })
-      : setPageState({ view: "NotFound" });
+    if (!isNaN(Number(selectedProjectId))) {
+      setPageState({ view: "Project", projectId: selectedProjectId });
+    } else {
+      setPageState({ view: "NotFound" });
+    }
   };
-  // getSelectedProject("3");
+  // GetSelectedProject("3");
   const handleProjectDelete = (id: string) => {
     const newProjects = projects.filter((project) => project.id !== id);
     setProjects(newProjects);
@@ -61,17 +65,17 @@ export default function App() {
     const updatedProjects = projects.map((proj) => {
       // If this is the project we want to update
       if (proj.id === projectId) {
-        // return a new project object, copying all existing props
+        // Return a new project object, copying all existing props
         return {
           ...proj,
-          //replacing `tasks` with a new array that includes the new task
+          //Replacing `tasks` with a new array that includes the new task
           tasks: [...proj.tasks, task],
         };
       }
       // Otherwise, return the original project untouched
       return proj;
     });
-    // set Project state to modified Projects  object
+    // Set Project state to modified Projects  object
     setProjects(updatedProjects);
   };
   const handleTaskDelete = (data: TaskDeleteProps) => {
@@ -79,17 +83,17 @@ export default function App() {
     const updatedProjects = projects.map((proj) => {
       // If this is the project we want to update
       if (proj.id === projectId) {
-        // return a new project object, copying all existing props
+        // Return a new project object, copying all existing props
         return {
           ...proj,
-          //replacing `tasks` with a new array that excluding deleted task
+          //Replacing `tasks` with a new array that excluding deleted task
           tasks: proj.tasks.filter((tasks) => tasks.taskId !== taskId),
         };
       }
       // Otherwise, return the original project untouched
       return proj;
     });
-    // set Project state to modified Projects  object
+    // Set Project state to modified Projects  object
     setProjects(updatedProjects);
   };
 

@@ -19,12 +19,12 @@ const Task = ({
   projectId,
   handleTaskDelete,
 }: TaskProps) => {
-  // temporary array to store task till app state used
+  // Temporary array to store task till app state used
   const [error, setError] = useState(false);
-  // use ref to accees input change
+  // Use ref to accees input change
   const task = useRef<HTMLInputElement>(null);
 
-  //  task validation min of 4 char
+  //  Task validation min of 4 char
   const onValidText = (ref: React.RefObject<HTMLInputElement>) => {
     const textElement = ref.current;
     if (!textElement) return null;
@@ -49,13 +49,13 @@ const Task = ({
     if (task.current) task.current.value = "";
   };
 
-  // const onDelete = (id: number) => {
-  //   setTasks((prev) => prev.filter((task) => task.id !== id));
+  // Const onDelete = (id: number) => {
+  //   SetTasks((prev) => prev.filter((task) => task.id !== id));
   // };
   return (
     <section>
       <h2 className=" text-2xl font-bold text-stone-600 my-2">Tasks</h2>
-      {/* label will be hidden later using tail wind sr-only */}
+      {/* Label will be hidden later using tail wind sr-only */}
       <div className="flex gap-2 items-center">
         <label htmlFor="task" style={{ position: "absolute", left: "-9999px" }}>
           Add new task
@@ -72,7 +72,7 @@ const Task = ({
         </button>
       </div>
       {error && <p>added tasks must have atleast 4 characters</p>}
-      {/*if no tasks show no task message */}
+      {/*If no tasks show no task message */}
       {tasks.length === 0 ? (
         <p>This project does not have any tasks yet.</p>
       ) : (
@@ -82,6 +82,7 @@ const Task = ({
               className=" flex justify-between my-2 p-1"
               key={task.taskId}
               id={task.taskId}
+              data-testid={"taskList"}
             >
               <p>{task.description}</p>
               <button

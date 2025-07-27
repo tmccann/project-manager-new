@@ -3,7 +3,7 @@ import { UserEvent } from "@testing-library/user-event";
 
 export const TaskHelpers = {
   getElements: () => ({
-    header: screen.getByRole("heading", { level: 2 }),
+    header: screen.getByRole("heading", { name: "Tasks" }),
     taskInput: screen.getByLabelText("Add new task"),
     addTaskButton: screen.getByRole("button", { name: "Add Task" }),
     taskElements: screen.queryAllByRole("listitem"),

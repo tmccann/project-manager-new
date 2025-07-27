@@ -43,11 +43,11 @@ const ProjectForm = ({ handleSubmit, onCancel }: ProjectFormProps) => {
   };
 
   const onClear = () => {
-    // clear refs
+    // Clear refs
     if (titleRef.current) titleRef.current.value = "";
     if (descriptionRef.current) descriptionRef.current.value = "";
     if (dueDateRef.current) dueDateRef.current.value = "";
-    // clear errors
+    // Clear errors
     setErrors(intialErrors);
     onCancel();
   };

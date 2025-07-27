@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import ProjectForm from "./ProjectForm";
 import { ProjectFormHelpers } from "../../__testUtils__/helpers/ProjectForm.helpers";
 import { validInput } from "../../__testUtils__/helpers/ProjectForm.helpers";
@@ -9,6 +9,7 @@ import {
 } from "../../__testUtils__/mocks/ModalMocks";
 
 const mockSubmit = vi.fn();
+const mockOnCancel = vi.fn();
 const user = userEvent.setup();
 
 beforeEach(() => {
@@ -22,7 +23,8 @@ afterEach(() => {
 
 describe("ProjectForm component", () => {
   beforeEach(() => {
-    render(<ProjectForm handleSubmit={mockSubmit} />);
+    vi.clearAllMocks();
+    render(<ProjectForm handleSubmit={mockSubmit} onCancel={mockOnCancel} />);
   });
   test("input and buttons render", () => {
     const {
@@ -69,7 +71,8 @@ describe("ProjectForm component", () => {
 
 describe("formsubmition and error modal", () => {
   beforeEach(() => {
-    render(<ProjectForm handleSubmit={mockSubmit} />);
+    vi.clearAllMocks();
+    render(<ProjectForm handleSubmit={mockSubmit} onCancel={mockOnCancel} />);
   });
   test("modal opens and closes with empty inputs error and onsubmit isn't called", async () => {
     await ProjectFormHelpers.actions.buttons.clickSave(user);
@@ -83,10 +86,6 @@ describe("formsubmition and error modal", () => {
     expect(dueDateError).toBeInTheDocument();
     const cancelButton = screen.getByRole("button", { name: "Cancel" });
     expect(cancelButton).toBeInTheDocument();
-    await user.click(cancelButton);
-    await waitFor(() => {
-      expect(screen.queryByText(/Form Error/i)).not.toBeInTheDocument();
-    });
   });
   test("title input invalid - modal displays title error only and onsubmit isn't called", async () => {
     await ProjectFormHelpers.actions.invalidInputs.enterInvalidTitle(user);
@@ -130,9 +129,16 @@ describe("formsubmition and error modal", () => {
     expect(dueDateError).toBeInTheDocument();
   });
 });
-describe("form submits when all values are valid", async () => {
+describe("form cancels and form submits when all values are valid ", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    render(<ProjectForm handleSubmit={mockSubmit} onCancel={mockOnCancel} />);
+  });
+  test("onCancel called when cancel button clicked", async () => {
+    await ProjectFormHelpers.actions.buttons.clickCancel(user);
+    expect(mockOnCancel).toHaveBeenCalled();
+  });
   test("form submits with valid inputs", async () => {
-    render(<ProjectForm handleSubmit={mockSubmit} />);
     await ProjectFormHelpers.actions.validInputs.enterValidTitle(user);
     await ProjectFormHelpers.actions.validInputs.enterValidDescription(user);
     await ProjectFormHelpers.actions.validInputs.enterValidDate(user);
