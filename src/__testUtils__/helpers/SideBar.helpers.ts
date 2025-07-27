@@ -11,5 +11,10 @@ export const SideBarHelpers = {
     async linkButton(user: UserEvent, name: string) {
       await user.click(screen.getByRole("button", { name: name }));
     },
+    async addProjectButton(user: UserEvent) {
+      await user.click(
+        screen.getByRole("button", { name: "Create New Project" })
+      );
+    },
   },
 };

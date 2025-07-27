@@ -1,39 +1,61 @@
+// eslint.config.js
 import js from "@eslint/js";
-import eslintPluginPrettier from "eslint-plugin-prettier";
-import reactRefresh from "eslint-plugin-react-refresh";
 import globals from "globals";
 import tseslint from "typescript-eslint";
+import eslintPluginPrettier from "eslint-plugin-prettier";
+import reactRefresh from "eslint-plugin-react-refresh";
+import reactHooks from "eslint-plugin-react-hooks";
+import testingLibrary from "eslint-plugin-testing-library";
+import jestDom from "eslint-plugin-jest-dom";
 
-export default tseslint.config(
-  { ignores: ["dist"] },
+export default [
   {
-    extends: [
-      js.configs.recommended,
-      ...tseslint.configs.recommended,
-      "plugin:react-hooks/recommended",
-      "plugin:react-refresh/recommended",
-      "plugin:prettier/recommended", // Ensures Prettier rules are respected
-      "prettier", // Disables ESLint rules that conflict with Prettier
-    ],
-    files: ["**/*.{ts,tsx}"],
+    ignores: ["dist"],
+  },
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
+  {
+    files: ["**/*.{ts,tsx,js,jsx}"],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
+      parserOptions: {
+        sourceType: "module",
+      },
     },
     plugins: {
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
       prettier: eslintPluginPrettier,
+      "testing-library": testingLibrary,
+      "jest-dom": jestDom,
     },
     rules: {
-      "prettier/prettier": ["error", { endOfLine: "auto", singleQuote: false }],
-      ...reactHooks.configs.recommended.rules,
+      // Prettier rules
+      "prettier/prettier": [
+        "error",
+        {
+          endOfLine: "auto",
+          singleQuote: false,
+          trailingComma: "es5", // keeps trailing commas where valid in ES5 (objects, arrays, etc.)
+        },
+      ],
+
+      // React rules
+      "react/react-in-jsx-scope": "off",
       "react-refresh/only-export-components": [
         "warn",
         { allowConstantExport: true },
       ],
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn",
+
+      // Style
       "capitalized-comments": ["error", "always"],
-      "react/react-in-jsx-scope": "off",
+
+      // Testing rules
+      "testing-library/await-async-utils": "error",
+      "testing-library/no-await-sync-events": "error",
     },
-  }
-);
+  },
+];

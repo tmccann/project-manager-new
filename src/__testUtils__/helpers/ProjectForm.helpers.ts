@@ -2,7 +2,11 @@ import { screen } from "@testing-library/react";
 import { UserEvent } from "@testing-library/user-event";
 
 const today = new Date().toLocaleDateString();
-console.log(today);
+export const formattedDate = new Date(today).toLocaleDateString("en-GB", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+});
 
 export const validInput = {
   title: "My Valid Title",
@@ -39,7 +43,7 @@ export const ProjectFormHelpers = {
         await user.click(screen.getByRole("button", { name: "Cancel" }));
       },
     },
-    // valid inputs
+    // Valid inputs
     validInputs: {
       async enterValidTitle(user: UserEvent) {
         await user.type(screen.getByLabelText("Title"), validInput.title);
@@ -55,7 +59,7 @@ export const ProjectFormHelpers = {
       },
     },
     invalidInputs: {
-      //  invalid Inputs
+      //  Invalid Inputs
       async enterInvalidTitle(user: UserEvent) {
         await user.type(screen.getByLabelText("Title"), invalidInputs.title);
       },

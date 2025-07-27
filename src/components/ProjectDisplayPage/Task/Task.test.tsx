@@ -69,7 +69,7 @@ describe("user input actions", () => {
     expect(mockAddTask).toBeCalledTimes(1);
     expect(mockAddTask).toBeCalledWith({
       projectId: "1",
-      taskId: "0",
+      taskId: "1",
       description: "1234",
     });
   });
@@ -86,11 +86,11 @@ describe("user clear button", async () => {
         handleTaskDelete={mockhandleTaskDelete}
       />
     );
-    await TaskHelpers.actions.clearButton(user, "task0");
+    await TaskHelpers.actions.clearButton(user, "task1");
     expect(mockhandleTaskDelete).toBeCalledTimes(1);
     expect(mockhandleTaskDelete).toHaveBeenCalledWith({
       projectId: "1",
-      taskId: "0",
+      taskId: "1",
     });
   });
 });
