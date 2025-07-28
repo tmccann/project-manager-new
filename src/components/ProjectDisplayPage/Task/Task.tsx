@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { TaskItem } from "../../../types/types";
+import { isValidText } from "../../../utils/Validations";
 
 export type TaskProps = {
   handleAddTask: (task: TaskItem) => void;
@@ -25,15 +26,10 @@ const Task = ({
   const task = useRef<HTMLInputElement>(null);
 
   //  Task validation min of 4 char
-  const onValidText = (ref: React.RefObject<HTMLInputElement>) => {
-    const textElement = ref.current;
-    if (!textElement) return null;
-    const val = textElement.value;
-    return val.length >= 4 ? val : null;
-  };
 
   const handleNewTaskValidation = () => {
-    const newTask = onValidText(task);
+    const current = task.current?.value ?? "";
+    const newTask = isValidText(current);
     const taskId = tasks.length === 0 ? "1" : (tasks.length + 1).toString();
 
     if (newTask) {

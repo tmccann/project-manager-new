@@ -16,14 +16,14 @@ const NoProject = ({ onAddProject, hasProjects }: NoProjectProps) => {
         </p>
       </div>
 
-      {/* turnery operator for if projects */}
+      {/* Turnery operator for if projects */}
       {hasProjects ? (
-        // message if projects
+        // Message if projects
         <div className="flex flex-col text-stone-400 my-2">
           <p>Select a project or {createProject}</p>
         </div>
       ) : (
-        // message if none
+        // Message if none
         <div className="flex flex-col text-stone-400 my-2">
           <p>{createProject}</p>
         </div>

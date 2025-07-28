@@ -1,3 +1,4 @@
+import { isValidText, isValidDate } from "../../../utils/Validations";
 import type { ErrorProps, ProjectFormData } from "../types";
 
 type ValidationResult = { data: ProjectFormData } | { errors: ErrorProps };
@@ -31,16 +32,4 @@ export const ValidateFormData = ({
     data.dueDate = dueDate!;
   }
   return Object.keys(errors).length > 0 ? { errors } : { data };
-};
-
-export const isValidText = (value: string) => {
-  return value.trim().length >= 4 ? value : null;
-};
-
-export const isValidDate = (value: string): string | null => {
-  const enteredDate = new Date(value);
-  if (isNaN(enteredDate.getTime())) return null;
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  return enteredDate >= today ? value : null;
 };
