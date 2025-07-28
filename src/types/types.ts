@@ -8,7 +8,7 @@ export type Project = {
 
 export type TaskItem = {
   projectId: string;
-  taskId: string;
+  id: string;
   description: string;
 };
 

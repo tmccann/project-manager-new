@@ -3,13 +3,19 @@ import { TaskItem } from "../../../types/types";
 import { isValidText } from "../../../utils/Validations";
 
 export type TaskProps = {
-  handleAddTask: (task: TaskItem) => void;
+  handleAddTask: ({
+    projectId,
+    description,
+  }: {
+    projectId: string;
+    description: string;
+  }) => void;
   projectId: string;
   tasks: TaskItem[];
-  handleTaskDelete: (data: TaskDeleteProps) => void;
+  handleTaskDelete: (deleteTaskData: DeleteTaskData) => void;
 };
 
-export type TaskDeleteProps = {
+export type DeleteTaskData = {
   projectId: string;
   taskId: string;
 };
@@ -30,11 +36,10 @@ const Task = ({
   const handleNewTaskValidation = () => {
     const current = task.current?.value ?? "";
     const newTask = isValidText(current);
-    const taskId = tasks.length === 0 ? "1" : (tasks.length + 1).toString();
 
     if (newTask) {
       setError(false);
-      handleAddTask({ projectId, taskId, description: newTask });
+      handleAddTask({ projectId, description: newTask });
       onClear();
     } else {
       setError(true);
@@ -76,17 +81,17 @@ const Task = ({
           {tasks.map((task) => (
             <li
               className=" flex justify-between my-2 p-1"
-              key={task.taskId}
-              id={task.taskId}
+              key={task.id}
+              id={task.id}
               data-testid={"taskList"}
             >
               <p>{task.description}</p>
               <button
                 className="text-stone-700 hover:text-red-500"
                 onClick={() => {
-                  handleTaskDelete({ projectId, taskId: task.taskId });
+                  handleTaskDelete({ projectId, taskId: task.id });
                 }}
-                data-testid={`task${task.taskId}`}
+                data-testid={`task${task.id}`}
               >
                 Clear
               </button>

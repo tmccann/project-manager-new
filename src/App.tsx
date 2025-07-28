@@ -2,20 +2,30 @@ import { useState } from "react";
 import NoProject from "./components/NoProject/NoProject";
 import ProjectForm from "./components/ProjectForm/ProjectForm";
 import ProjectDisplayPage from "./components/ProjectDisplayPage/ProjectDisplayPage";
-import { Project, TaskItem, PageState } from "./types/types";
-import { TaskDeleteProps } from "./components/ProjectDisplayPage/Task/Task";
 import Sidebar from "./components/Sidebar/Sidebar";
 import { ProjectFormData } from "./components/ProjectForm/types";
 import Tumbleweed404 from "./components/404/Tumblewedd404";
 
-export default function App() {
-  // Type PageState =
-  // | { view: "NoProject" }
-  // | { view: "Form" }
-  // | { view: "Project"; projectId: string }
-  // | { view: "NotFound" };
+import { Project, PageState } from "./types/types";
 
-  const [projects, setProjects] = useState<Project[]>([]);
+import {
+  addTaskToProject,
+  deleteTaskFromProject,
+  generateNextId,
+} from "./utils/Generate";
+import { DeleteTaskData } from "./components/ProjectDisplayPage/Task/Task";
+
+export default function App() {
+  const [projects, setProjects] = useState<Project[]>([
+    {
+      id: "1",
+      title: "demo 1",
+      description: "this is first Project",
+      dueDate: "12/12/2025",
+      tasks: [{ projectId: "1", id: "1", description: "test task" }],
+    },
+  ]);
+
   const [pageState, setPageState] = useState<PageState>({
     view: "NoProject",
   });
@@ -29,14 +39,12 @@ export default function App() {
 
   const handleSubmit = (data: ProjectFormData) => {
     const { title, description, dueDate } = data;
-    const id = projects.length
-      ? Number(projects[projects.length - 1].id) + 1
-      : 1;
+    const nextId = generateNextId(projects);
     setProjects((prev) => {
       return [
         ...prev,
         {
-          id: id.toString(),
+          id: nextId,
           title: title,
           description: description,
           dueDate: dueDate,
@@ -47,54 +55,41 @@ export default function App() {
   };
 
   const getSelectedProject = (selectedProjectId: string) => {
-    if (!isNaN(Number(selectedProjectId))) {
+    const projectIdAsNumber = Number(selectedProjectId);
+    if (!isNaN(projectIdAsNumber)) {
       setPageState({ view: "Project", projectId: selectedProjectId });
     } else {
       setPageState({ view: "NotFound" });
     }
   };
-  // GetSelectedProject("3");
+
   const handleProjectDelete = (id: string) => {
     const newProjects = projects.filter((project) => project.id !== id);
     setProjects(newProjects);
     setPageState({ view: "NoProject" });
   };
 
-  const handleAddTask = (task: TaskItem) => {
-    const { projectId } = task;
-    const updatedProjects = projects.map((proj) => {
-      // If this is the project we want to update
-      if (proj.id === projectId) {
-        // Return a new project object, copying all existing props
-        return {
-          ...proj,
-          //Replacing `tasks` with a new array that includes the new task
-          tasks: [...proj.tasks, task],
-        };
-      }
-      // Otherwise, return the original project untouched
-      return proj;
+  const handleAddTask = ({
+    projectId,
+    description,
+  }: {
+    projectId: string;
+    description: string;
+  }) => {
+    const projectsAddTask = addTaskToProject({
+      projects,
+      projectId,
+      description,
     });
-    // Set Project state to modified Projects  object
-    setProjects(updatedProjects);
+    setProjects(projectsAddTask);
   };
-  const handleTaskDelete = (data: TaskDeleteProps) => {
-    const { projectId, taskId } = data;
-    const updatedProjects = projects.map((proj) => {
-      // If this is the project we want to update
-      if (proj.id === projectId) {
-        // Return a new project object, copying all existing props
-        return {
-          ...proj,
-          //Replacing `tasks` with a new array that excluding deleted task
-          tasks: proj.tasks.filter((tasks) => tasks.taskId !== taskId),
-        };
-      }
-      // Otherwise, return the original project untouched
-      return proj;
+
+  const handleTaskDelete = (deleteTaskData: DeleteTaskData) => {
+    const projectsDeletedTask = deleteTaskFromProject({
+      projects,
+      deleteTaskData,
     });
-    // Set Project state to modified Projects  object
-    setProjects(updatedProjects);
+    setProjects(projectsDeletedTask);
   };
 
   let content;
