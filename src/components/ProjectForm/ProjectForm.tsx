@@ -5,7 +5,7 @@ import { ProjectFormData, ErrorProps } from "./types";
 import { ValidateFormData } from "./helpers/dataValidation";
 
 type ProjectFormProps = {
-  handleSubmit: (data: ProjectFormData) => void;
+  handleSubmit: (AddProjectData: ProjectFormData) => void;
   onCancel: () => void;
 };
 
@@ -36,8 +36,8 @@ const ProjectForm = ({ handleSubmit, onCancel }: ProjectFormProps) => {
       });
       modal.current?.open();
     } else {
-      const data = results.data;
-      handleSubmit(data);
+      const AddProjectData = results.data;
+      handleSubmit(AddProjectData);
       onClear();
     }
   };

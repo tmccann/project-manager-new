@@ -9,5 +9,5 @@ export const mockData = {
   title: "demo 1",
   description: "this is first Project",
   dueDate: formattedDate,
-  tasks: [{ projectId: "1", taskId: "1", description: "test task" }],
+  tasks: [{ projectId: "1", id: "1", description: "test task" }],
 };

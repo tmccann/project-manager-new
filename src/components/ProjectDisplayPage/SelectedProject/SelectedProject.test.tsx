@@ -5,7 +5,6 @@ import SelectedProject from "./SelectedProject";
 import userEvent from "@testing-library/user-event";
 
 import { formattedDate } from "../../../__testUtils__/helpers/ProjectForm.helpers";
-console.log(formattedDate);
 const user = userEvent.setup();
 const mockHandleDelete = vi.fn();
 describe("SelectedProject component", () => {

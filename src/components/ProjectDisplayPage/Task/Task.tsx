@@ -76,7 +76,6 @@ const Task = ({
       ) : (
         <ul className=" bg-stone-100 rounded-sm">
           {tasks.map((task) => {
-            console.log("Rendering task:", task.id);
             return (
               <li
                 className=" flex justify-between my-2 p-1"

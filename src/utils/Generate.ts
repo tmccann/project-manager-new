@@ -1,4 +1,5 @@
 import { DeleteTaskData } from "../components/ProjectDisplayPage/Task/Task";
+import { ProjectFormData } from "../components/ProjectForm/types";
 import { Project } from "../types/types";
 
 type WithId = { id: string };
@@ -13,6 +14,10 @@ type DeleteTaskFromProjectArgs = {
   projects: Project[];
 };
 
+type NewProject = {
+  projects: Project[];
+  AddProjectData: ProjectFormData;
+};
 export const generateNextId = (array: WithId[]): string => {
   if (array.length === 0) return "1";
 
@@ -60,4 +65,17 @@ export const deleteTaskFromProject = ({
     return proj;
   });
   return updatedProjects;
+};
+
+export const createNewProject = ({ projects, AddProjectData }: NewProject) => {
+  const { title, description, dueDate } = AddProjectData;
+  const newId = generateNextId(projects);
+  const newProject: Project = {
+    id: newId.toString(),
+    title: title,
+    description: description,
+    dueDate: dueDate,
+    tasks: [],
+  };
+  return newProject;
 };

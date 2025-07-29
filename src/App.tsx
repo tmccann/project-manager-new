@@ -10,8 +10,8 @@ import { Project, PageState } from "./types/types";
 
 import {
   addTaskToProject,
+  createNewProject,
   deleteTaskFromProject,
-  generateNextId,
 } from "./utils/Generate";
 import { DeleteTaskData } from "./components/ProjectDisplayPage/Task/Task";
 
@@ -29,21 +29,9 @@ export default function App() {
   //  If projectForm cancelled pafeState set to {view: noProject}
   const onCancel = () => setPageState({ view: "NoProject" });
 
-  const handleSubmit = (data: ProjectFormData) => {
-    const { title, description, dueDate } = data;
-    const nextId = generateNextId(projects);
-    setProjects((prev) => {
-      return [
-        ...prev,
-        {
-          id: nextId,
-          title: title,
-          description: description,
-          dueDate: dueDate,
-          tasks: [],
-        },
-      ];
-    });
+  const handleSubmit = (AddProjectData: ProjectFormData) => {
+    const newProject = createNewProject({ projects, AddProjectData });
+    setProjects([...projects, newProject]);
   };
 
   const getSelectedProject = (selectedProjectId: string) => {
@@ -77,7 +65,6 @@ export default function App() {
   };
 
   const handleTaskDelete = (deleteTaskData: DeleteTaskData) => {
-    console.log(deleteTaskData);
     const projectsDeletedTask = deleteTaskFromProject({
       projects,
       deleteTaskData,
