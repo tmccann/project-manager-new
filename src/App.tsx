@@ -36,8 +36,8 @@ export default function App() {
   //  If projectForm cancelled pageState set to {view: noProject}
   const onCancel = () => setPageState({ view: "NoProject" });
 
-  const handleSubmit = (AddProjectData: ProjectFormData) => {
-    const newProject = createNewProject({ projects, AddProjectData });
+  const handleSubmit = (addProjectData: ProjectFormData) => {
+    const newProject = createNewProject({ projects, addProjectData });
     setProjects([...projects, newProject]);
   };
 

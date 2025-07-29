@@ -16,7 +16,7 @@ type DeleteTaskFromProjectArgs = {
 
 type NewProject = {
   projects: Project[];
-  AddProjectData: ProjectFormData;
+  addProjectData: ProjectFormData;
 };
 
 type DeleteProjectArgs = {
@@ -72,8 +72,8 @@ export const deleteTaskFromProject = ({
   return updatedProjects;
 };
 
-export const createNewProject = ({ projects, AddProjectData }: NewProject) => {
-  const { title, description, dueDate } = AddProjectData;
+export const createNewProject = ({ projects, addProjectData }: NewProject) => {
+  const { title, description, dueDate } = addProjectData;
   const newId = generateNextId(projects);
   const newProject: Project = {
     id: newId.toString(),
