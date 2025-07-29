@@ -16,15 +16,7 @@ import {
 import { DeleteTaskData } from "./components/ProjectDisplayPage/Task/Task";
 
 export default function App() {
-  const [projects, setProjects] = useState<Project[]>([
-    {
-      id: "1",
-      title: "demo 1",
-      description: "this is first Project",
-      dueDate: "12/12/2025",
-      tasks: [{ projectId: "1", id: "1", description: "test task" }],
-    },
-  ]);
+  const [projects, setProjects] = useState<Project[]>([]);
 
   const [pageState, setPageState] = useState<PageState>({
     view: "NoProject",
@@ -85,6 +77,7 @@ export default function App() {
   };
 
   const handleTaskDelete = (deleteTaskData: DeleteTaskData) => {
+    console.log(deleteTaskData);
     const projectsDeletedTask = deleteTaskFromProject({
       projects,
       deleteTaskData,

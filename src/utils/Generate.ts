@@ -49,12 +49,12 @@ export const deleteTaskFromProject = ({
   projects,
   deleteTaskData,
 }: DeleteTaskFromProjectArgs): Project[] => {
-  const { projectId, taskId } = deleteTaskData;
+  const { projectId, id } = deleteTaskData;
   const updatedProjects = projects.map((proj) => {
     if (proj.id === projectId) {
       return {
         ...proj,
-        tasks: proj.tasks.filter((tasks) => tasks.id !== taskId),
+        tasks: proj.tasks.filter((tasks) => tasks.id !== id),
       };
     }
     return proj;

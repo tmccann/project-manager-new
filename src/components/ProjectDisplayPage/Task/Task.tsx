@@ -17,7 +17,7 @@ export type TaskProps = {
 
 export type DeleteTaskData = {
   projectId: string;
-  taskId: string;
+  id: string;
 };
 
 const Task = ({
@@ -50,9 +50,6 @@ const Task = ({
     if (task.current) task.current.value = "";
   };
 
-  // Const onDelete = (id: number) => {
-  //   SetTasks((prev) => prev.filter((task) => task.id !== id));
-  // };
   return (
     <section>
       <h2 className=" text-2xl font-bold text-stone-600 my-2">Tasks</h2>
@@ -78,25 +75,28 @@ const Task = ({
         <p>This project does not have any tasks yet.</p>
       ) : (
         <ul className=" bg-stone-100 rounded-sm">
-          {tasks.map((task) => (
-            <li
-              className=" flex justify-between my-2 p-1"
-              key={task.id}
-              id={task.id}
-              data-testid={"taskList"}
-            >
-              <p>{task.description}</p>
-              <button
-                className="text-stone-700 hover:text-red-500"
-                onClick={() => {
-                  handleTaskDelete({ projectId, taskId: task.id });
-                }}
-                data-testid={`task${task.id}`}
+          {tasks.map((task) => {
+            console.log("Rendering task:", task.id);
+            return (
+              <li
+                className=" flex justify-between my-2 p-1"
+                key={task.id}
+                id={task.id}
+                data-testid={"taskList"}
               >
-                Clear
-              </button>
-            </li>
-          ))}
+                <p>{task.description}</p>
+                <button
+                  className="text-stone-700 hover:text-red-500"
+                  onClick={() => {
+                    handleTaskDelete({ projectId, id: task.id });
+                  }}
+                  data-testid={`task${task.id}`}
+                >
+                  Clear
+                </button>
+              </li>
+            );
+          })}
         </ul>
       )}
     </section>

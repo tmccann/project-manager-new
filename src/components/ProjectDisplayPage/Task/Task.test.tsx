@@ -4,7 +4,13 @@ import { TaskHelpers } from "../../../__testUtils__/helpers/Task.helpers";
 import { tasks } from "../../../__testUtils__/mocks/Task.mock";
 import userEvent from "@testing-library/user-event";
 
-const mockAddTask = vi.fn();
+const mockAddTask = vi.fn(({ projectId, description }) => {
+  return {
+    projectId,
+    id: "1",
+    description,
+  };
+});
 const mockhandleTaskDelete = vi.fn();
 const user = userEvent.setup();
 const taskErrorMessage = "added tasks must have atleast 4 characters";
@@ -69,7 +75,6 @@ describe("user input actions", () => {
     expect(mockAddTask).toBeCalledTimes(1);
     expect(mockAddTask).toBeCalledWith({
       projectId: "1",
-      taskId: "1",
       description: "1234",
     });
   });
@@ -77,6 +82,7 @@ describe("user input actions", () => {
 
 describe("user clear button", async () => {
   vi.clearAllMocks();
+
   test("deletTask is called with correct props", async () => {
     render(
       <Task
@@ -86,11 +92,12 @@ describe("user clear button", async () => {
         handleTaskDelete={mockhandleTaskDelete}
       />
     );
+    screen.debug();
     await TaskHelpers.actions.clearButton(user, "task1");
     expect(mockhandleTaskDelete).toBeCalledTimes(1);
     expect(mockhandleTaskDelete).toHaveBeenCalledWith({
       projectId: "1",
-      taskId: "1",
+      id: "1",
     });
   });
 });
