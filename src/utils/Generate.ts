@@ -18,6 +18,11 @@ type NewProject = {
   projects: Project[];
   AddProjectData: ProjectFormData;
 };
+
+type DeleteProjectArgs = {
+  projects: Project[];
+  id: string;
+};
 export const generateNextId = (array: WithId[]): string => {
   if (array.length === 0) return "1";
 
@@ -78,4 +83,12 @@ export const createNewProject = ({ projects, AddProjectData }: NewProject) => {
     tasks: [],
   };
   return newProject;
+};
+
+export const deleteProject = ({
+  projects,
+  id,
+}: DeleteProjectArgs): Project[] => {
+  const newProjects = projects.filter((project) => project.id !== id);
+  return newProjects;
 };

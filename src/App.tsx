@@ -11,6 +11,7 @@ import { Project, PageState } from "./types/types";
 import {
   addTaskToProject,
   createNewProject,
+  deleteProject,
   deleteTaskFromProject,
 } from "./utils/Generate";
 import { DeleteTaskData } from "./components/ProjectDisplayPage/Task/Task";
@@ -26,7 +27,13 @@ export default function App() {
     setPageState({ view: "Form" });
   };
 
-  //  If projectForm cancelled pafeState set to {view: noProject}
+  const handleProjectDelete = (id: string) => {
+    const newProjects = deleteProject({ projects, id });
+    setProjects(newProjects);
+    setPageState({ view: "NoProject" });
+  };
+
+  //  If projectForm cancelled pageState set to {view: noProject}
   const onCancel = () => setPageState({ view: "NoProject" });
 
   const handleSubmit = (AddProjectData: ProjectFormData) => {
@@ -41,12 +48,6 @@ export default function App() {
     } else {
       setPageState({ view: "NotFound" });
     }
-  };
-
-  const handleProjectDelete = (id: string) => {
-    const newProjects = projects.filter((project) => project.id !== id);
-    setProjects(newProjects);
-    setPageState({ view: "NoProject" });
   };
 
   const handleAddTask = ({
