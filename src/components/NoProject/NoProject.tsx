@@ -1,4 +1,5 @@
 import logo from "../../assets/no-projects.png";
+import Button from "../ui/Buttons";
 
 type NoProjectProps = {
   onAddProject: () => void;
@@ -29,13 +30,14 @@ const NoProject = ({ onAddProject, hasProjects }: NoProjectProps) => {
         </div>
       )}
       {/* Show button: "Create New Project" */}
-      <button
-        className=" m-auto bg-stone-700 hover:bg-stone-600 text text-stone-400 hover:text-stone-200 transition-colors py-2 px-2 rounded-md mb-6 text-sm font-semibold"
+      <Button
+        variant="secondary"
+        autoMargin
         data-testid="NoProjectAddProject"
         onClick={onAddProject}
       >
         Create New Project
-      </button>
+      </Button>
     </section>
   );
 };

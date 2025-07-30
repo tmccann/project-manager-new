@@ -3,6 +3,9 @@ import Modal from "./ErrorModal/Modal";
 import { ModalHandle } from "./ErrorModal/Modal";
 import { ProjectFormData, ErrorProps } from "./types";
 import { ValidateFormData } from "./helpers/dataValidation";
+import Button from "../ui/Buttons";
+import Input from "../ui/Input";
+import TextArea from "../ui/Textarea";
 
 type ProjectFormProps = {
   handleSubmit: (AddProjectData: ProjectFormData) => void;
@@ -18,7 +21,7 @@ const ProjectForm = ({ handleSubmit, onCancel }: ProjectFormProps) => {
   const [errors, setErrors] = useState<ErrorProps>(intialErrors);
 
   const titleRef = useRef<HTMLInputElement>(null);
-  const descriptionRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const dueDateRef = useRef<HTMLInputElement>(null);
   const modal = useRef<ModalHandle>(null);
 
@@ -80,52 +83,25 @@ const ProjectForm = ({ handleSubmit, onCancel }: ProjectFormProps) => {
         onSubmit={handleFormValidation}
       >
         <div className="flex justify-end gap-2">
-          <button
-            className="py-2 px-4 rounded-md mb-6 font-semibold"
-            type="button"
-            onClick={onClear}
-          >
+          <Button variant="ghostDanger" onClick={onClear}>
             Cancel
-          </button>
-          <button
-            className="bg-stone-900 hover:bg-stone-600 text-stone-200 transition-colors py-2 px-4 rounded-md mb-6"
-            type="submit"
-          >
+          </Button>
+          <Button variant="primary" type="submit">
             Save
-          </button>
+          </Button>
         </div>
-
-        <label className="block" htmlFor="title">
-          Title
-        </label>
-        <input
-          className="px-2 py-1 rounded-sm bg-stone-200 border-b-2 border-stone-300 focus:outline-none focus:border-stone-400"
-          type="text"
-          name="title"
-          id="title"
-          ref={titleRef}
-        />
-
-        <label className="block" htmlFor="description">
-          Description
-        </label>
-        <input
-          className="px-2 py-1 rounded-sm bg-stone-200 border-b-2 border-stone-300 focus:outline-none focus:border-stone-400"
-          type="text"
-          name="description"
-          id="description"
+        <Input ref={titleRef} label="title" id="title" />
+        <TextArea
           ref={descriptionRef}
+          label="description"
+          id="description"
+          rows={4}
         />
-
-        <label className="block" htmlFor="dueDate">
-          Due Date
-        </label>
-        <input
-          className="px-2 py-1 rounded-sm bg-stone-200 border-b-2 border-stone-300 focus:outline-none focus:border-stone-400"
-          type="text"
-          name="dueDate"
-          id="dueDate"
+        <Input
           ref={dueDateRef}
+          label="due date"
+          id="duedata"
+          placeholder="mm/dd/yyyy"
         />
       </form>
     </section>

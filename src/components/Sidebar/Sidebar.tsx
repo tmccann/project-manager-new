@@ -1,4 +1,5 @@
 import { Project } from "../../types/types";
+import Button from "../ui/Buttons";
 
 type SideBarProps = {
   projects: Project[];
@@ -17,25 +18,30 @@ const Sidebar = ({
         Your Projects
       </h2>
 
-      <button
+      <Button
+        variant="secondary"
+        autoMargin
         onClick={onAddProject}
-        className="bg-stone-700 hover:bg-stone-600 text-stone-400 hover:text-stone-200 transition-colors py-2 px-2 rounded-md mb-6 text-sm font-semibold"
         data-testid="SideBarAddProject"
       >
         Create New Project
-      </button>
-
-      <ul className="space-y-2 overflow-y-auto">
-        {projects.map((proj) => (
-          <li key={proj.id}>
-            <button
-              onClick={() => getSelectedProject(proj.id)}
-              className="w-full text-left p-2 text-stone-500 hover:bg-stone-800 hover:text-stone-200 transition-colors"
-            >
-              {proj.title}
-            </button>
-          </li>
-        ))}
+      </Button>
+      <ul className="space-y-2 mt-5 overflow-y-auto">
+        {projects.map((proj) => {
+          const title = proj.title;
+          const capitalised =
+            title.charAt(0).toUpperCase() + title.slice(1).toLowerCase();
+          return (
+            <li key={proj.id}>
+              <button
+                onClick={() => getSelectedProject(proj.id)}
+                className="w-full text-left p- text-stone-500 hover:bg-stone-800 hover:text-stone-200 transition-colors"
+              >
+                {capitalised}
+              </button>
+            </li>
+          );
+        })}
       </ul>
     </aside>
   );

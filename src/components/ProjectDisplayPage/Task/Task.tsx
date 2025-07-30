@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
 import { TaskItem } from "../../../types/types";
 import { isValidText } from "../../../utils/Validations";
+import Button from "../../ui/Buttons";
+import Input from "../../ui/Input";
 
 export type TaskProps = {
   handleAddTask: ({
@@ -54,20 +56,11 @@ const Task = ({
     <section>
       <h2 className=" text-2xl font-bold text-stone-600 my-2">Tasks</h2>
       {/* Label will be hidden later using tail wind sr-only */}
-      <div className="flex gap-2 items-center">
-        <label htmlFor="task" style={{ position: "absolute", left: "-9999px" }}>
-          Add new task
-        </label>
-        <input
-          className=" bg-stone-300 rounded-sm py-1 px-2 mb-2"
-          type="text"
-          id="task"
-          ref={task}
-          minLength={4}
-        />
-        <button className="py-1 px-2 mb-2 " onClick={handleNewTaskValidation}>
+      <div className="flex gap-2 items-center mb-4">
+        <Input ref={task} label="addTask" hideLabel />
+        <Button variant="ghost" onClick={handleNewTaskValidation}>
           Add Task
-        </button>
+        </Button>
       </div>
       {error && <p>added tasks must have atleast 4 characters</p>}
       {/*If no tasks show no task message */}
