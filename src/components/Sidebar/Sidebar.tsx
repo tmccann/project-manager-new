@@ -1,4 +1,5 @@
 import { Project } from "../../types/types";
+import { capitaliseFirstLetter } from "../../utils/capitaliseFirstLetter";
 import Button from "../ui/Buttons";
 
 type SideBarProps = {
@@ -29,8 +30,7 @@ const Sidebar = ({
       <ul className="space-y-2 mt-5 overflow-y-auto">
         {projects.map((proj) => {
           const title = proj.title;
-          const capitalised =
-            title.charAt(0).toUpperCase() + title.slice(1).toLowerCase();
+          const capitalised = capitaliseFirstLetter(title);
           return (
             <li key={proj.id}>
               <button

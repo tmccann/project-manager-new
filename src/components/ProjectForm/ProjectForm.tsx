@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Modal from "./ErrorModal/Modal";
 import { ModalHandle } from "./ErrorModal/Modal";
 import { ProjectFormData, ErrorProps } from "./types";
@@ -81,7 +81,7 @@ const ProjectForm = ({ handleSubmit, onCancel }: ProjectFormProps) => {
         />
         <Input
           ref={dueDateRef}
-          label="due date"
+          label="Due Date"
           id="duedata"
           placeholder="mm/dd/yyyy"
         />

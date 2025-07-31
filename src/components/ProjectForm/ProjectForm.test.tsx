@@ -61,11 +61,7 @@ describe("ProjectForm component", () => {
     await ProjectFormHelpers.actions.validInputs.enterValidDate(user);
     expect(screen.getByLabelText("Due Date")).toHaveValue(validInput.dueDate);
     await ProjectFormHelpers.actions.buttons.clickCancel(user);
-    const { titleInput, descriptionInput, dueDateInput } =
-      ProjectFormHelpers.getElements();
-    expect(titleInput).toHaveValue("");
-    expect(descriptionInput).toHaveValue("");
-    expect(dueDateInput).toHaveValue("");
+    expect(mockOnCancel).toHaveBeenCalled();
   });
 });
 

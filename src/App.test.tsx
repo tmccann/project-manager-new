@@ -16,6 +16,7 @@ import {
 
 import { validInput } from "./__testUtils__/helpers/ProjectForm.helpers";
 import { formattedDate } from "./__testUtils__/helpers/ProjectForm.helpers";
+import { capitaliseFirstLetter } from "./utils/capitaliseFirstLetter";
 beforeEach(() => {
   vi.restoreAllMocks();
   setupModalMocks();
@@ -88,9 +89,10 @@ describe("App Component", () => {
     let refreshedLinks = await screen.findAllByRole("listitem");
     expect(refreshedLinks).toHaveLength(1);
     // Selected project has correct data displayed
-    await SideBarHelpers.actions.linkButton(user, "My Valid Title");
+    const title = capitaliseFirstLetter("My Valid Title");
+    await SideBarHelpers.actions.linkButton(user, title);
     const selectedProjectHeader = await screen.findByRole("heading", {
-      name: "My Valid Title",
+      name: title,
     });
     expect(selectedProjectHeader).toBeInTheDocument();
     expect(screen.getByText(validInput.description)).toBeInTheDocument();

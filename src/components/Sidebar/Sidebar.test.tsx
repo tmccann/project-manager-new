@@ -46,7 +46,8 @@ describe("Sidebar actions", () => {
     );
   });
   test("Selected project is call when link clicked", async () => {
-    await SideBarHelpers.actions.linkButton(user, "demo 1");
+    // First letter of project is caoitalised for display purposes
+    await SideBarHelpers.actions.linkButton(user, "Demo 1");
     expect(mockGetSelectedProject).toHaveBeenCalled();
     expect(mockGetSelectedProject).toBeCalledWith("1");
   });

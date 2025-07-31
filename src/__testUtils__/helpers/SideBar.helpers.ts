@@ -1,5 +1,6 @@
 import { screen } from "@testing-library/react";
 import { UserEvent } from "@testing-library/user-event";
+import { capitaliseFirstLetter } from "../../utils/capitaliseFirstLetter";
 
 export const SideBarHelpers = {
   getElements: () => ({
@@ -9,7 +10,9 @@ export const SideBarHelpers = {
   }),
   actions: {
     async linkButton(user: UserEvent, name: string) {
-      await user.click(screen.getByRole("button", { name: name }));
+      await user.click(
+        screen.getByRole("button", { name: capitaliseFirstLetter(name) })
+      );
     },
     async addProjectButton(user: UserEvent) {
       await user.click(

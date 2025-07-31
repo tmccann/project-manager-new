@@ -1,4 +1,5 @@
 import type { Project } from "../../../types/types";
+import { capitaliseFirstLetter } from "../../../utils/capitaliseFirstLetter";
 export type SelectedProjectProps = {
   project: Project;
   handleProjectDelete: (id: string) => void;
@@ -19,7 +20,7 @@ const SelectedProject = ({
         {/* Display title and delete button */}
         {/* Delete button should pass project id*/}
         <h1 className=" text-3xl font-bold text-stone-600 mb-2">
-          {project.title}
+          {capitaliseFirstLetter(project.title)}
         </h1>
         <button
           className="text-stone-600 hover:text-stone-950"

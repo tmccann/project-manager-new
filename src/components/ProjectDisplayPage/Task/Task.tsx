@@ -57,7 +57,7 @@ const Task = ({
       <h2 className=" text-2xl font-bold text-stone-600 my-2">Tasks</h2>
       {/* Label will be hidden later using tail wind sr-only */}
       <div className="flex gap-2 items-center mb-4">
-        <Input ref={task} label="addTask" hideLabel />
+        <Input ref={task} label="Add new task" id="addTask" hideLabel />
         <Button variant="ghost" onClick={handleNewTaskValidation}>
           Add Task
         </Button>
